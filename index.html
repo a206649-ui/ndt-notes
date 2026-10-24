@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STSB3392 Topic 2 · 典型 NDT 方法精讲</title>
+<style>
+:root{
+  --ink:#1b1f24; --muted:#5b6470; --line:#e4e8ef; --bg:#ffffff; --soft:#f6f8fb;
+  --navy:#1f3864; --blue:#2e75b6; --orange:#c55a11; --red:#b02a2a; --teal:#0f6b6b;
+  --green:#37623d; --yellow:#8a6d00;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.85 "Songti SC","Source Han Serif SC","Noto Serif CJK SC",Georgia,serif;}
+header.hero{padding:44px 24px 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcfe,#ffffff)}
+.wrap{max-width:920px;margin:0 auto}
+.kicker{font:600 12px/1.6 -apple-system,"Hiragino Sans GB",sans-serif;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue)}
+h1{font:700 34px/1.3 "Hiragino Sans GB","Apple SD Gothic Neo",sans-serif;color:var(--navy);margin:10px 0 6px}
+.sub{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+.lead{background:var(--soft);border-left:4px solid var(--orange);padding:14px 18px;border-radius:0 8px 8px 0;font-size:15.5px}
+.layout{display:grid;grid-template-columns:236px minmax(0,1fr);gap:34px;max-width:1180px;margin:0 auto;padding:26px 24px 80px}
+nav.toc{position:sticky;top:18px;align-self:start;font:13.5px/1.7 -apple-system,"Hiragino Sans GB",sans-serif;
+  border-right:1px solid var(--line);padding-right:16px;max-height:calc(100vh - 40px);overflow:auto}
+nav.toc b{display:block;color:var(--navy);margin-bottom:8px;font-size:12px;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:3px 0}
+nav.toc a:hover{color:var(--blue)}
+nav.toc a.sub2{padding-left:14px;font-size:12.5px}
+main{max-width:920px}
+section{margin:0 0 64px;scroll-margin-top:18px}
+.chip{display:inline-block;font:600 11.5px/1 -apple-system,sans-serif;letter-spacing:.06em;
+  padding:5px 9px;border-radius:999px;background:var(--soft);color:var(--muted);border:1px solid var(--line)}
+.part-A{color:var(--red);border-color:#f0d6d6;background:#fdf3f3}
+.part-B{color:var(--orange);border-color:#f6ddc9;background:#fdf6ef}
+.part-C{color:var(--blue);border-color:#d6e4f3;background:#f3f8fd}
+.part-D{color:var(--teal);border-color:#cfe7e7;background:#f1faf9}
+.part-E{color:var(--green);border-color:#d6e7d9;background:#f4faf5}
+.part-X{color:#555;border-color:#e2e2e2;background:#f7f7f7}
+h2{font:700 24px/1.4 "Hiragino Sans GB",sans-serif;color:var(--navy);margin:34px 0 8px;
+  padding-bottom:8px;border-bottom:2px solid var(--navy)}
+h3{font:700 17.5px/1.5 "Hiragino Sans GB",sans-serif;margin:26px 0 8px;color:#24303f}
+h4{font:600 15px/1.5 -apple-system,"Hiragino Sans GB",sans-serif;margin:18px 0 6px;color:#33404f}
+p{margin:10px 0}
+blockquote{margin:14px 0;padding:12px 16px;background:var(--soft);border-left:4px solid var(--orange);
+  border-radius:0 6px 6px 0;color:#39424e;font-size:14.5px}
+blockquote p{margin:4px 0}
+ul,ol{margin:10px 0 10px 24px;padding:0}
+li{margin:5px 0}
+table{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:14px;
+  font-family:-apple-system,"Hiragino Sans GB",sans-serif}
+th,td{border:none;border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+thead th{background:var(--navy);color:#fff;font-weight:600}
+tbody tr:nth-child(even){background:#fafbfd}
+code{background:#eef1f6;padding:1px 5px;border-radius:4px;font-size:13.5px;
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+div.formula{margin:16px 0;padding:14px 16px;background:#f6f8fb;border-left:4px solid var(--blue);
+  font-size:16.5px;text-align:center;overflow-x:auto}
+.frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 .18em}
+.frac .num{display:block;padding:0 .25em}
+.frac .den{display:block;padding:0 .25em;border-top:1px solid currentColor}
+span.math{font-family:"Times New Roman","Songti SC",serif;font-size:1.05em}
+strong{color:#101418}
+hr{border:none;border-top:1px solid var(--line);margin:30px 0}
+a{color:var(--blue)}
+/* 演示区 */
+.demo{margin:22px 0;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:#fcfdff;
+  font-family:-apple-system,"Hiragino Sans GB",sans-serif}
+.demo h4{margin:0 0 4px;color:var(--navy);font-size:15px}
+.demo .hint{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+.demo label{display:block;font-size:13px;color:#39424e;margin:10px 0 4px}
+.demo input[type=range]{width:100%}
+.demo .out{font-size:13.5px;color:#1f2733;margin-top:8px}
+.demo .out b{color:var(--navy)}
+.demo svg,.demo canvas{display:block;margin:10px auto 0;max-width:100%}
+.demo .caption{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+.choices{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0}
+.choices button{font:13px/1 -apple-system,sans-serif;padding:8px 12px;border-radius:8px;
+  border:1px solid var(--line);background:#fff;cursor:pointer}
+.choices button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.result{margin-top:12px;padding:12px 14px;border-radius:8px;background:#f3f8fd;border-left:4px solid var(--blue);font-size:14px}
+/* 页脚 */
+footer{border-top:1px solid var(--line);padding:28px 24px 60px;color:var(--muted);font-size:13px}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;padding:18px 16px 60px}
+  nav.toc{position:static;border-right:none;border-bottom:1px solid var(--line);padding:0 0 12px;max-height:none}
+  h1{font-size:27px}
+}
+@media print{
+  nav.toc{display:none}
+  .layout{display:block;padding:0}
+  section{page-break-inside:auto;page-break-before:always}
+  section:first-of-type{page-break-before:auto}
+  .chip{page-break-after:avoid}
+  h2{page-break-after:avoid}
+  table,.demo,.formula{page-break-inside:avoid}
+  blockquote{page-break-inside:auto}
+  h2,h3,h4{page-break-after:avoid}
+  section{page-break-before:auto}
+  em{font-style:italic}
+  .demo{border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="kicker">STSB3392 无损检测 I · TOPIC 2 · 逐页精讲（P1–P34）</div>
+  <h1>四种无损检测方法：从物理原理到现场选择</h1>
+  <div class="sub">对照 34 页幻灯片《Typical NDT Techniques: UT, RT, LPT, MPT》· 零基础可读 · 2026-10-24 整理</div>
+  <div class="lead"><b>一句话：</b>渗透靠毛细把染料吸进<b>开口</b>，磁粉靠<b>漏磁</b>抓铁磁件的表面/近表面裂纹，超声靠<b>回声时间</b>量深度，射线靠<b>差异吸收</b>成永久影像；四种通道互补，关键件必须组合检测。</div>
+  <div class="sub" style="margin-top:14px">
+    读法：左栏目录按幻灯片页码分区 → 每节都按「问题 → 原文 → 拆解 → 算例 → 读数字 → 工程决定 → 易卡点 → 口播稿」展开 → 遇到演示先动手拖一拖。
+    <span class="chip">34 页全覆盖</span>
+    <span class="chip">6 个交互演示</span>
+    <span class="chip">12 道自测</span>
+  </div>
+</div></header>
+
+<div class="layout">
+<nav class="toc">
+  <b>目录（按页码）</b>
+  <a href="#overview">第 1 节 总览</a>
+<a href="#lpt">第 2 节 液体渗透 LPT</a>
+<a href="#mpt">第 3 节 磁粉 MPT</a>
+<a href="#ut">第 4 节 超声 UT</a>
+<a href="#rt">第 5 节 射线 RT</a>
+<a href="#choice">第 6 节 选择方法</a>
+<a href="#appendix">附录 讲课流程 · 速查 · 术语 · 自测</a>
+</nav>
+<main>
+<section id="overview">
+<div class="chip part-X">第 1 节 · 总览 · P1–P5</div>
+<h2>第 1 节 · 四种方法，四条"物理通道"（总览）</h2>
+<blockquote><p>覆盖 P1–P5　｜　本节目标：讲完能回答"为什么这四种方法谁也替代不了谁"。</p></blockquote>
+<hr>
+<h3>0. 先抛问题</h2>
+<p>同样一条裂纹，为什么有的时候用渗透，有的时候用磁粉，有的时候必须上超声或射线？</p>
+<p>如果有一种方法包打天下，这门课就不用讲四种了。<strong>所以四方法的差别不在"高级不高级"，而在"你用什么能量、能到达材料的哪个深度、受什么材料限制"。</strong> 把这三件事想清楚，选方法就是查表。</p>
+<hr>
+<h3>1. 幻灯片原话（P5）</h2>
+<blockquote><p><strong>[slide] 四方法四原理</strong></p><p><strong>LPT 液体渗透</strong>：毛细作用把液体吸进表面裂纹 —— 表面。</p><p><strong>MPT 磁粉</strong>：裂纹扰乱磁场，铁粉聚集 —— 表面 + 近表面。</p><p><strong>UT 超声</strong>：高频声波从缺陷反射 —— 体积（volumetric）。</p><p><strong>RT 射线</strong>：缺陷改变射线被吸收的量 —— 体积。</p></blockquote>
+<p>P1–P4 交代了课程位置与讨论题：医生不用开刀查骨折、渔船用声呐找鱼、把自行车内胎泡水里找漏气——这些日常经验分别对应射线（或超声）、声呐（超声）、气泡检漏（渗透/泄漏的思想）。</p>
+<hr>
+<h3>2. 拆黑箱：四条物理通道</h2>
+<h4>2.1 能量不同，所以"能到达的地方"不同</h3>
+<table><thead><tr><th>方法</th><th>输入能量</th><th>与材料怎么作用</th><th>能到达哪里</th></tr></thead><tbody><tr><td>LPT</td><td>液体（表面张力驱动）</td><td>润湿 + 毛细吸入</td><td><strong>只有开口到表面的缝隙</strong></td></tr><tr><td>MPT</td><td>磁场</td><td>铁磁材料导磁，缺陷处磁阻大 → 漏磁</td><td>表面 + 近表面（几毫米内）</td></tr><tr><td>UT</td><td>高频声波</td><td>声阻抗突变处反射</td><td>整个体积（可达数米钢）</td></tr><tr><td>RT</td><td>X/γ 射线</td><td>密度×厚度决定吸收</td><td>整个体积（穿透力看能量）</td></tr></tbody></table>
+<p><strong>记住一句话</strong>：<strong>能量进得去、回得来，才有信号。</strong> 渗透剂的"能量"是液体，它没有穿透能力，所以只能走表面开口；磁力线沿着铁磁体走，遇到气隙就"漏"出来；声波在界面反射；射线被吸收——四套完全不同的物理，决定了四种不同的能力边界。</p>
+<h4>2.2 三个必须分清的概念</h3>
+<ol><li><strong>表面 vs 体积（surface vs volumetric）</strong>：不是"深和浅"，而是"<strong>方法能不能覆盖整个截面</strong>"。渗透和磁粉本质是表面方法；超声和射线是体积方法。</li><li><strong>表面开口（open to surface）</strong>：只有 LPT 要求缺陷必须<strong>通到表面</strong>。这是它最硬的限制，也是它最容易被误用的地方。</li><li><strong>材料限制</strong>：MPT 只对<strong>铁磁材料</strong>有效；LPT 对<strong>多孔材料</strong>不适用；UT 需要<strong>声波能传播</strong>（多数金属可以，但粗晶散射严重）；RT 几乎通吃，但有辐射安全问题。</li></ol>
+<h4>2.3 为什么"组合"是常态，而不是偷懒</h3>
+<p>每种方法都有自己的盲区：渗透漏掉内埋缺陷；磁粉漏掉非铁磁材料；超声对"方向不利"的平面缺陷可能漏；射线对"平行于射线"的裂纹不敏感。<strong>关键件用两种以上方法交叉覆盖，是工程规范的要求，不是保险心理。</strong></p>
+<hr>
+<h3>3. 一个手算：为什么高频声波能"看见"小缺陷</h2>
+<p>UT 用 1–10 MHz。以钢中纵波声速 5920 m/s 计算波长：</p>
+<div class="formula">λ= <span class="frac"><span class="num">v</span><span class="den">f</span></span></div>
+<ul><li>5 MHz：<span class="math">λ= 5920/5×10<sup>6</sup> ≈1.2 mm</span></li><li>2 MHz：<span class="math">λ≈3 mm</span></li><li>10 MHz：<span class="math">λ≈0.6 mm</span></li></ul>
+<p><strong>结论</strong>：缺陷尺寸接近或大于波长才"看得清"。所以查细小缺陷要用高频；但频率越高，衰减越快、穿透越浅——<strong>分辨率与穿透力是一对矛盾</strong>，这就是为什么探头有一整套频率可选。</p>
+<hr>
+<h3>4. 教读数字</h2>
+<ul><li><strong>1–10 MHz</strong>：工业常规；细晶材料可用更高，粗晶（如奥氏体焊缝）反而要降低频率减少噪声。</li><li><strong>几毫米</strong>：MPT 的有效深度量级（近表面），不是"能查很深"。</li><li><strong>两类"深"要区分</strong>：能<strong>穿透</strong>多深（射线/超声）与能<strong>检出</strong>多深（受缺陷大小、方向、材料影响）。</li></ul>
+<hr>
+<h3>5. 落到工程决定</h2>
+<ol><li><strong>先问"缺陷可能在哪"</strong>：表面开口 → 渗透；表面/近表面且是钢 → 磁粉；内部 → 超声或射线。</li><li><strong>再问"材料是什么"</strong>：铝、奥氏体不锈钢、钛 → 磁粉直接出局。</li><li><strong>最后问"现场条件"</strong>：能不能接触、能不能两侧接近、有没有辐射安全条件、要不要永久记录。</li></ol>
+<hr>
+<h3>6. 学生最容易卡住的三个点</h2>
+<ol><li><strong>"渗透不是也能查内部吗？"</strong> 不能。渗透剂没有穿透能力，只能沿与表面连通的缝隙进去。</li><li><strong>"磁粉能查多深？"</strong> 近表面，通常几毫米量级，且随材料与磁化方式变化；不是"能查内部"。</li><li><strong>"射线和超声都是体积方法，随便选一个？"</strong> 不是。超声擅长<strong>平面型</strong>缺陷（裂纹、未熔合），射线擅长<strong>体积型</strong>（气孔、夹渣）——因为两者的对比机制不同。</li></ol>
+<hr>
+<h3>7. 本节需要的模态（写 HTML 时实现）</h2>
+<table><thead><tr><th>演示</th><th>演示的因果</th><th>最小可懂标准</th></tr></thead><tbody><tr><td>四通道对比图（同一块带缺陷的板，四种能量画法）</td><td>为什么同一缺陷四种方法看到的不一样</td><td>能指出"哪个方法看不到这个缺陷"</td></tr><tr><td>频率—波长滑块</td><td>频率↑→波长↓→能看见更小缺陷，但衰减↑</td><td>能说出分辨率与穿透的矛盾</td></tr></tbody></table>
+<hr>
+<h3>8. 讲台上这样说（可直接照念）</h2>
+<blockquote><p>这一讲要讲四种无损检测：渗透、磁粉、超声、射线。先别急着背流程，先问一个问题：为什么需要四种？</p><p>因为它们的"物理通道"不一样。渗透靠液体表面张力，把染料吸进裂纹——液体没有穿透能力，所以只能查开口到表面的缺陷。磁粉靠磁场，铁磁材料里磁力线遇到裂纹会漏出来，把铁粉吸住——只能查表面和近表面，而且材料必须是铁磁的。超声靠声波，遇到声学性质突变就反射，能查内部，还能算出缺陷多深。射线靠穿透和吸收，密度厚度不同、底片黑度不同，能查内部，还能留永久记录。</p><p>所以选方法就三步：缺陷可能在哪？材料是什么？现场条件允许什么？这三步问完，答案基本就定了。最后记住一句话：没有哪种方法能查全部，关键件都是组合着查的。</p></blockquote>
+<hr>
+<h3>9. 如果你只记一件事</h2>
+<blockquote><p><strong>四种方法不是四个难度等级，而是四条物理通道：液体走表面开口、磁场走铁磁近表面、声波和射线走整个体积——通道决定了能力边界。</strong></p></blockquote>
+<hr>
+<h3>10. 来源</h2>
+<ul><li><code>[slide]</code>：<code>sources/topic2.pdf</code> P1–P5</li><li><code>[补]</code> Hellier, C. <em>Handbook of Nondestructive Evaluation</em>, 3rd ed., McGraw-Hill, 2020（各方法总览章节）</li><li><code>[补]</code> ISO 9712（人员认证的方法代号：PT、MT、UT、RT、VT…）</li><li><code>[推断]</code> 波长与可检尺寸的关系为超声检测通识（λ=v/f；可检尺寸约为波长量级）</li></ul>
+</section><section id="lpt">
+<div class="chip part-A">第 2 节 · 液体渗透 LPT · P6–P10</div>
+<h2>第 2 节 · 液体渗透（LPT）：让裂纹自己把染料吸进去</h2>
+<blockquote><p>覆盖 P6–P10　｜　本节目标：讲完能回答"为什么只能查开口裂纹、为什么预清洗最重要、六步各步在干什么"。</p><p>来源标注：<code>[slide]</code> = 幻灯片原文；<code>[补]</code> = 本节补充，注明来源；<code>[推断]</code> = 无直接引文，属领域通识，已注明依据。</p></blockquote>
+<hr>
+<h3>0. 先抛问题</h2>
+<p>一条疲劳裂纹，开口可能只有几微米，比头发丝还细；它藏在焊缝表面，眼睛看不见；你也不能把工件撬开来确认。</p>
+<p><strong>那你凭什么让它"自己举手"？</strong></p>
+<p>渗透检测（LPT）的全部聪明之处就一句话：<strong>不靠眼睛找裂纹，而是让裂纹自己把带颜色的液体吸进去，再让它自己吐出来。</strong> 本节要拆的就是"吸进去"和"吐出来"这两件事背后的物理。</p>
+<hr>
+<h3>1. 幻灯片原话（P7–P10）</h2>
+<blockquote><p><strong>[slide] P7 原理三步</strong></p><p>① 施加渗透剂：渗透剂铺满表面并被吸入裂纹。</p><p>② 去除多余：表面被清洁，渗透剂仍留在裂纹里。</p><p>③ 施加显像剂：显像剂把渗透剂吸出来，形成可见指示。</p><p>关键：LPT 只能发现<strong>开口到表面</strong>的缺陷。被油漆、油污或脏东西封住的裂纹，渗透剂进不去。</p></blockquote>
+<blockquote><p><strong>[slide] P8 六步流程</strong></p><p>① 预清洗（最重要的一步）→ ② 施加渗透剂，停留 5–30 min（有时 1 h）→ ③ 去除多余（水或溶剂；不要把裂纹里的洗掉）→ ④ 干燥 → ⑤ 显像（薄薄一层白色显像剂把渗透剂吸出）→ ⑥ 检验并后清洗。</p><p>例：磨削后立刻做 LPT 要注意——磨削会把金属"抹"到裂纹上把口封住，可能需要轻蚀刻或额外清洗。</p></blockquote>
+<blockquote><p><strong>[slide] P9 材料选择</strong>：渗透剂（可见红色染料 / 荧光）；去除方式（水洗 / 后乳化 / 溶剂）；灵敏度等级 1–4；显像剂（干粉 / 水溶 / 水悬浮 / 非水）。</p></blockquote>
+<blockquote><p><strong>[slide] P10 适用性</strong>：适合几乎所有光滑、无孔材料（钢、不锈钢、铝、钛、玻璃、部分塑料）、焊缝、铸锻件；不适合粗糙多孔表面（砂铸件、多孔陶瓷、木材）、会吸收或反应渗透剂的塑料、涂层封住缺陷的零件、以及任何表层以下的缺陷。</p></blockquote>
+<hr>
+<h3>2. 拆黑箱：把每个名词讲透</h2>
+<h4>2.1 毛细作用：凭什么液体能"自己"钻进微米级裂缝</h3>
+<p><strong>先给直觉</strong>：把纸巾的一角浸到水里，水会自己往上爬；把两块玻璃片贴紧、中间夹一点水，水会把玻璃片吸在一起。这两种现象都是<strong>表面张力</strong>在起作用。</p>
+<p><strong>再给机制</strong>：液体表面像一层被拉紧的膜。当液体与固体"亲和"（接触角小）时，这层膜会把液体往缝里拽。缝越窄，拽的力量越大——因为压力差与缝的半径成反比：</p>
+<div class="formula">Δp = <span class="frac"><span class="num">2γcosθ</span><span class="den">r</span></span></div>
+<ul><li><span class="math">γ</span>：液体表面张力（N/m）</li><li><span class="math">θ</span>：液体与固体表面的接触角（越小越"亲"）</li><li><span class="math">r</span>：缝隙的等效半径（m）</li></ul>
+<p><strong>算一遍给你看</strong>（这是本节的第一个手算）：</p>
+<p>渗透剂表面张力约 <span class="math">30 mN/m</span>，干净金属上接触角接近 0（<span class="math">cosθ≈1</span>）：</p>
+<table><thead><tr><th>裂缝开口半径</th><th>毛细压力 <span class="math">Δp</span></th><th>相当于</th></tr></thead><tbody><tr><td><span class="math">10 µm</span>（0.01 mm）</td><td><span class="math">2×0.03/10<sup>-5</sup> = 6 kPa</span></td><td>0.06 个大气压</td></tr><tr><td><span class="math">1 µm</span></td><td><span class="math">2×0.03/10<sup>-6</sup> = 60 kPa</span></td><td>0.6 个大气压</td></tr><tr><td><span class="math">0.1 µm</span></td><td><span class="math">600 kPa</span></td><td>6 个大气压</td></tr></tbody></table>
+<p><strong>结论一</strong>：缝越细，吸力越大——所以微裂纹反而比宽裂缝更容易"灌满"。 <strong>结论二</strong>：吸力大不等于吸得快。缝越细，液体流动的阻力越大，所以必须给<strong>停留时间</strong>（slide 的 5–30 min 不是随便写的）。 <code>[补] 毛细压力公式为标准物理（Young–Laplace）；渗透剂约 25–35 mN/m 的低表面张力是产品设计的核心指标（Hellier《Handbook of NDE》PT 章）。</code></p>
+<h4>2.2 六步流程：每一步都在解决一个具体失败模式</h3>
+<table><thead><tr><th>步骤</th><th>在解决什么问题</th><th>做错的后果</th></tr></thead><tbody><tr><td><strong>① 预清洗</strong></td><td>油、漆、锈、氧化皮会<strong>封住开口</strong>，渗透剂进不去</td><td><strong>全部漏检</strong>——这是最常见也最致命的失误，所以 slide 把它标成"最重要"</td></tr><tr><td>② 施加渗透剂</td><td>靠毛细作用灌入</td><td>表面太干/太冷 → 渗透慢，停留时间不够就查不到</td></tr><tr><td>③ 去除多余</td><td>表面必须干净，否则整片背景发亮</td><td>洗过头 → 把缝里的也洗掉，<strong>漏检</strong></td></tr><tr><td>④ 干燥</td><td>水分会稀释/污染显像剂，也会把渗透剂带出</td><td>干燥不当=背景噪声</td></tr><tr><td>⑤ 显像</td><td>白色薄层把缝里的渗透剂<strong>吸回表面</strong>并放大</td><td>涂太厚 → 掩盖；涂太薄 → 显不出</td></tr><tr><td>⑥ 检验+后清洗</td><td>判读指示；残留化学品会引起腐蚀</td><td>不后清洗 → 零件腐蚀、涂层附着力下降</td></tr></tbody></table>
+<h4>2.3 为什么"开口"是硬条件，而不是"最好开口"</h3>
+<p>渗透剂没有穿透能力。它不进金属内部，只沿<strong>与表面连通的缝隙</strong>往里走。所以：</p>
+<ul><li>焊缝的<strong>表面裂纹、气孔开口、咬边、未熔合（开口到表面）</strong> → 能查</li><li><strong>表面下的裂纹、夹渣、内部未熔合</strong> → 渗透剂根本到不了</li><li>涂层、油膜、氧化皮把口封住 → 等效于没有开口</li></ul>
+<p><code>[slide]</code> 的磨削例子正是这个逻辑：磨削会把金属"抹"过裂纹口，形成一层极薄的涂抹层（smearing），把入口堵死；所以要么轻蚀刻把这层去掉，要么重新处理表面。</p>
+<h4>2.4 渗透剂家族：三组参数决定你买的是哪种</h3>
+<table><thead><tr><th>维度</th><th>选项</th><th>怎么选</th></tr></thead><tbody><tr><td><strong>显色方式</strong></td><td>可见（红色染料）/ 荧光（UV-A 365 nm）</td><td>荧光灵敏度更高，但需要暗室和紫外灯；现场大件常用可见</td></tr><tr><td><strong>去除方式</strong></td><td>水洗型 / 后乳化型 / 溶剂去除型</td><td>水洗快但容易过洗；<strong>后乳化</strong>先让多余渗透剂"变可水洗"再冲，控制更稳；溶剂型适合局部/现场</td></tr><tr><td><strong>灵敏度</strong></td><td>等级 1（低）–4（超高）</td><td>等级越高越灵敏，<strong>假指示也越多</strong>，不是越高越好</td></tr></tbody></table>
+<p><code>[补] 标准体系把渗透剂按"类型/方法/灵敏度等级"分类（ISO 3452 系列、ASTM E165/E1417）；具体代码与等级字母写作时以现行标准原文为准。</code></p>
+<h4>2.5 显像剂四种：干的、溶的、悬浮的、非水的</h3>
+<table><thead><tr><th>类型</th><th>特点</th><th>典型场景</th></tr></thead><tbody><tr><td>干粉</td><td>靠粉末吸附，适合粗糙面、高温</td><td>铸件、焊缝、现场</td></tr><tr><td>水溶型</td><td>成膜均匀，背景干净</td><td>光洁面、批量件</td></tr><tr><td>水悬浮型</td><td>兼顾吸附与成膜</td><td>通用</td></tr><tr><td><strong>非水（溶剂基）</strong></td><td><strong>最灵敏</strong>，膜薄均匀，适合小面积</td><td>航空件、关键件局部</td></tr></tbody></table>
+<h4>2.6 什么时候不能用：四条例外</h3>
+<ol><li><strong>多孔材料</strong>（砂铸件、多孔陶瓷、木材、粉末冶金件）→ 孔隙里全是残留渗透剂，整片背景发亮，真假难辨</li><li><strong>会吸收/反应渗透剂的塑料</strong></li><li><strong>涂层封住缺陷的零件</strong></li><li><strong>任何表面以下的缺陷</strong>（这不是"效果差"，是原理上不可能）</li></ol>
+<h4>2.7 顺带把四个铸锻缺陷名词解释掉</h3>
+<ul><li><strong>冷隔 cold shut</strong>：两股金属在模具里相遇但没熔合，表面留一道圆滑的接缝</li><li><strong>热裂 hot tear</strong>：凝固收缩时被拉裂，沿晶界、常出现在最后凝固的热节</li><li><strong>折叠 lap</strong>：轧制/锻造时金属被压叠到表面，形成一道折缝</li><li><strong>咬边 undercut</strong>：焊缝与母材交界处被电弧"挖"出的凹槽</li></ul>
+<p>这些缺陷的共同点是<strong>开口到表面</strong>——正好是 LPT 的用武之地，所以 slide 把它们列进"适合"。</p>
+<hr>
+<h3>3. 教读数字</h2>
+<ul><li><strong>5–30 min 停留时间</strong>：不是随便给的窗口；温度低、黏度大、缝更细 → 取上限甚至更长。<strong>只报"停留 5 分钟"而不说条件，等于没报。</strong></li><li><strong>灵敏度 1–4</strong>：数字越大越灵敏，但<strong>假指示率也上升</strong>。验收时要按标准规定的等级，不是随手选最高。</li><li><strong>荧光检测的观察条件</strong>：暗室要够暗、UV-A 辐照要够强。<code>[补]</code> ISO 3059 规定荧光检测时被测表面的 UV-A 辐照度 <strong>≥1000 µW/cm²</strong>、暗室白光 <strong>≤20 lx</strong>（常被引用的数值，引用时以现行版为准）；可见染料法则需要充足白光（常见要求 ≥500 lx）。</li></ul>
+<hr>
+<h3>4. 落到工程决定</h2>
+<ol><li><strong>打磨/机加工之后不能直接检</strong>：要先确认没有涂抹层封口（必要时轻蚀刻），否则"检了等于没检"。</li><li><strong>焊接检验的时机</strong>：焊缝冷却、清渣、表面清理之后再做；带飞溅、焊渣的表面会大量假指示。</li><li><strong>后清洗必须做</strong>：渗透剂/显像剂残留会吸潮、引起腐蚀，也会影响后续焊接和涂装。</li><li><strong>铝合金机轮、涡轮叶片</strong>（slide 例子）：这些材料非磁性，MPT 用不了，所以用<strong>荧光渗透</strong>找早期疲劳裂纹——这就是"材料决定方法"的实例。</li></ol>
+<hr>
+<h3>5. 学生最容易卡住的四个点</h2>
+<ol><li><strong>"显像剂为什么能把缝里的液体吸出来？"</strong></li></ol>
+<p>白色薄层是多孔的，靠<strong>反向毛细作用</strong>把缝口的渗透剂吸到表面并摊开，同时白色背景提供对比。它不是"擦出来"的。</p>
+<ol><li><strong>"洗得越干净不是越好吗？"</strong></li></ol>
+<p>表面的多余必须洗掉，但<strong>缝里的不能洗掉</strong>。水洗型渗透剂最容易被过洗（over-washing），所以有经验的做法是控制水压/水温/时间，或者改用后乳化型。</p>
+<ol><li><strong>"为什么多孔材料不行？"</strong></li></ol>
+<p>孔隙本身就是"无数条开口裂缝"，渗透剂进得去、洗不净，整片背景发亮，无法判断哪个是真的缺陷指示。</p>
+<ol><li><strong>"荧光为什么比红色染料灵敏？"</strong></li></ol>
+<p>人眼在暗场里对微弱荧光更敏感，而且荧光是"发光"（主动发亮），红染料只是"反射"（被动反光），对比度不同。</p>
+<hr>
+<h3>6. 本节需要的模态（写作 HTML 时实现）</h2>
+<table><thead><tr><th>演示</th><th>演示的因果</th><th>最小可懂标准</th></tr></thead><tbody><tr><td>剖面动图：渗透剂进入开口裂纹 → 去除多余 → 显像剂吸出</td><td>"为什么只查开口" + "显像剂的作用"</td><td>能指出哪一步出错会导致漏检</td></tr><tr><td>滑块：裂缝半径 <span class="math">r</span> → 毛细压力 <span class="math">Δp</span></td><td>缝越细吸力越大</td><td>能预测"更细的裂纹压力更高，但填充更慢"</td></tr><tr><td>并排对比：可见 vs 荧光（同一缺陷）</td><td>为什么荧光更灵敏</td><td>能说出对比度来源不同</td></tr></tbody></table>
+<hr>
+
+<div class="demo">
+  <h4>动手试：裂缝越细，吸力越大</h4>
+  <p class="hint">拖动滑块改变裂缝半径，看毛细压力怎么变（渗透剂表面张力取 0.03 N/m，接触角按完全润湿计算）。</p>
+  <label>裂缝半径 r = <span id="capVal"></span> µm</label>
+  <input type="range" id="capR" min="0.1" max="20" step="0.1" value="1">
+  <div style="background:#e9eef6;border-radius:6px;height:22px;margin-top:8px;overflow:hidden">
+    <div id="capBar" style="height:22px;background:#c55a11;color:#fff;font:12px/22px sans-serif;text-align:right;padding-right:6px;width:30%"></div>
+  </div>
+  <div class="out" id="capOut"></div>
+  <div class="caption">示意计算：Δp = 2γ/r；实际渗透剂配方与表面状态会影响结果。</div>
+</div>
+<h3>7. 讲台上这样说（可直接照念）</h2>
+<blockquote><p>好，我们先看第一种方法：液体渗透。</p><p>大家先想一个问题：一条几微米宽的裂纹，你眼睛看不见，又不能把零件剖开，怎么查？渗透检测的办法很聪明——我不去找裂纹，我让裂纹自己把颜色吸进去。</p><p>原理叫毛细作用。你们中学做过实验，纸巾一角放进水里，水自己往上爬，对吧？裂缝就是极细的毛细管，液体表面张力会把它往缝里拽。缝越细，拽力越大——一微米的缝，毛细压力大概零点六个大气压；十微米就只有零点零六了。所以微裂纹其实更容易灌满，但灌得慢，所以要给它时间，这就是流程里"停留五到三十分钟"的来历。</p><p>那六步流程里哪一步最重要？第一步，预清洗。为什么？因为渗透剂只能从开口进去。你表面有油、有漆、有锈，等于把裂纹的嘴封上了——后面做得再漂亮，也什么都查不到。这是渗透检测最常见的漏检原因。</p><p>还有一点要记住：磨削以后不能马上检。磨削会把金属抹到裂纹口上，形成一层薄薄的涂抹层，把口堵住。这种情况要先轻蚀刻，或者重新处理表面。</p><p>最后一句：渗透检测只认"开口到表面"的缺陷。表面以下的，它原理上就查不到——所以才有后面的磁粉、超声、射线。</p></blockquote>
+<hr>
+<h3>8. 如果你只记一件事</h2>
+<blockquote><p><strong>LPT 靠毛细作用把渗透剂"吸进"开口缺陷，靠显像剂把它"吐出来"；开口被封，一切归零——所以预清洗和表面状态决定成败。</strong></p></blockquote>
+<hr>
+<h3>9. 来源</h2>
+<ul><li><code>[slide]</code>：<code>sources/topic2.pdf</code> P6–P10</li><li><code>[补]</code> Hellier, C. <em>Handbook of Nondestructive Evaluation</em>, 3rd ed., McGraw-Hill, 2020（PT 章：渗透剂类型、显像剂、工艺控制）</li><li><code>[补]</code> ISO 3452 系列（PT：通用原则、渗透材料、参考试块）、ASTM E165 / E1417（PT 实践）</li><li><code>[补]</code> ISO 3059（PT/MT 观察条件：UV-A 辐照度与暗室白光）</li><li><code>[推断]</code> 毛细压力公式（Young–Laplace，标准物理）；铸锻缺陷定义为领域通识</li><li>待核（写作终稿前）：ISO 3452 具体类型/方法代码、ISO 3059 数值的现行版本、渗透剂表面张力的典型范围</li></ul>
+</section><section id="mpt">
+<div class="chip part-B">第 3 节 · 磁粉 MPT · P11–P16</div>
+<h2>第 3 节 · 磁粉检测（MPT）：让裂纹把磁力线"撕开"</h2>
+<blockquote><p>覆盖 P11–P16　｜　本节目标：讲完能回答"为什么必须转 90° 测两次、为什么铝不能用、线圈要多少电流"。</p></blockquote>
+<hr>
+<h3>0. 先抛问题</h2>
+<p>一根钢轴，表面下 1 mm 有一条裂纹，肉眼看不见，渗透也进不去（没开口）。</p>
+<p><strong>有没有办法"隔着表面"把它找出来？</strong> 有——如果材料能被磁化，就让磁力线穿过它，看裂纹会不会把磁力线"撕开"。</p>
+<hr>
+<h3>1. 幻灯片原话（P12–P16）</h2>
+<blockquote><p><strong>[slide] P12 漏磁原理</strong>：磁化的钢棒有表面裂纹时，裂纹是低磁导率的空气隙，磁通从表面"漏"出来，吸住细铁粉 → 铁粉在漏磁处聚集，勾勒出裂纹形状。只能用于铁磁材料：碳钢、低合金钢、铸铁、镍；不能用于铝、铜、奥氏体不锈钢。</p><p><strong>[slide] P13 磁场方向</strong>：纵向场（线圈或磁轭）能查<strong>横向</strong>裂纹，漏掉平行于磁场的裂纹；周向场（直接通电/触头）能查<strong>纵向</strong>裂纹。规则：裂纹与磁力线接近 90° 时显示最好，所以每个区域要<strong>转 90° 测两次</strong>。</p><p><strong>[slide] P14 算例</strong>：<span class="math">NI = 45000/(L/D)</span>，N 圈数、I 电流、L/D 长径比；适用于低填充系数、零件贴靠线圈（如 ASTM E1444），L/D 约 2–15。例：400 mm 长、50 mm 直径、5 圈 → L/D=8 → NI=5625 安匝 → I≈1125 A。</p><p><strong>[slide] P15–P16</strong>：LPT vs MPT 对比表；Q2 讨论（吊钩 / 铝轮 / 316 不锈钢管）。</p></blockquote>
+<hr>
+<h3>2. 拆黑箱</h2>
+<h4>2.1 为什么只有"铁磁材料"能被磁化</h3>
+<p>材料的磁性来自内部<strong>磁畴</strong>（magnetic domains）：每个小区域里的原子磁矩方向一致，像一个微型磁铁。外磁场一来，磁畴转向、长大，材料就整体磁化。</p>
+<ul><li><strong>铁、钴、镍及其合金</strong>：磁畴容易转向 → 铁磁性</li><li><strong>奥氏体不锈钢（如 316）</strong>：面心立方结构，磁畴不易形成 → 宏观上<strong>非铁磁</strong>，磁粉吸不住</li><li><strong>铝、铜、钛</strong>：本来就非铁磁</li></ul>
+<p>温度超过<strong>居里点</strong>，热运动打乱磁畴，铁磁材料也会失去磁性（补充知识，不考计算）。</p>
+<h4>2.2 漏磁是怎么产生的</h3>
+<p>磁力线在材料内部"走捷径"——因为铁磁材料的磁导率远高于空气。遇到裂纹（里面是空气或非磁性夹杂），这条"捷径"断了，磁力线被迫绕行并从表面<strong>漏出去</strong>。漏出来的磁场把表面的铁粉吸住，肉眼就看到一条"毛边"。</p>
+<p>所以有一个硬规则：<strong>裂纹必须横跨磁力线</strong>。夹角越接近 90°，漏磁越强；裂纹与磁场平行时，磁力线顺着裂纹走，几乎不漏——<strong>这就是为什么要转 90° 测两次</strong>。</p>
+<h4>2.3 两种磁化方式，各查一个方向</h3>
+<table><thead><tr><th>磁化方式</th><th>怎么产生</th><th>磁力线方向</th><th>擅长查</th></tr></thead><tbody><tr><td><strong>纵向场</strong></td><td>线圈（coil）或磁轭（yoke）</td><td>沿零件轴向</td><td><strong>横向</strong>裂纹（横切零件）</td></tr><tr><td><strong>周向场</strong></td><td>直接通电（head shot、prod）</td><td>沿圆周</td><td><strong>纵向</strong>裂纹（沿零件长度）</td></tr></tbody></table>
+<p>一个区域测两次、磁场转 90°，才能覆盖两个方向——这不是流程繁琐，是物理决定的。</p>
+<hr>
+<h3>3. 手算：线圈磁化需要多大电流</h2>
+<div class="formula"><span class="frac"><span class="num">NI</span><span class="den">1</span></span> = <span class="frac"><span class="num">45000</span><span class="den">L/D</span></span></div>
+<p>已知：轴长 400 mm、直径 50 mm、线圈 5 圈。</p>
+<ol><li>长径比：<span class="math">L/D = 400/50 = 8</span></li><li>安匝数：<span class="math">NI = 45000/8 = 5625</span> 安匝</li><li>电流：<span class="math">I = 5625/5 ≈1125 A</span></li></ol>
+<p><strong>注意</strong>：1125 A 是大电流，实际设备用低电压大电流的磁化电源；而且这个公式只是<strong>起点</strong>。</p>
+<p><code>[补]</code> 这类公式在文献里存在写法差异（<span class="math">45000/(L/D)</span> 与 <span class="math">45000·D/L</span> 的争议），本质都是<strong>经验公式</strong>；NDT.net 的技术讨论与 ASTM E1444/ASME E709 体系都强调：<strong>最终必须用磁场指示器或带已知缺陷的参考试片验证磁场是否达标</strong>。slide 自己的"Check"一句说的就是这个。</p>
+<hr>
+<h3>4. 教读数字</h2>
+<ul><li><strong>L/D 2–15</strong>：公式的适用范围。太短（L/D&lt;2）或太长（&gt;15）都不适用，要换方法或按标准查表。</li><li><strong>灵敏度</strong>：颗粒越细、湿法悬浮液、荧光颗粒 → 灵敏度越高；但背景噪声与假指示也增加。</li><li><strong>退磁（demagnetise）</strong>：检测后必须退磁，否则剩磁会吸铁屑、干扰后续焊接电弧、影响仪表。</li></ul>
+<hr>
+<h3>5. 落到工程决定</h2>
+<ol><li><strong>焊后检测</strong>：碳钢/低合金钢焊缝常用磁轭法，每个区域两个方向各测一次。</li><li><strong>材料判定优先于方法选择</strong>：316 不锈钢、铝、铜 → 直接换 PT 或 ET。</li><li><strong>表面准备</strong>：薄涂层有时可容忍（磁粉能透过薄漆层显示），但厚涂层、镀层会影响灵敏度。</li><li><strong>退磁 + 清洗</strong>：检测后要退磁并清掉磁粉残留。</li></ol>
+<hr>
+<h3>6. 学生最容易卡住的四个点</h2>
+<ol><li><strong>"为什么要测两遍？"</strong> 因为裂纹只有横跨磁力线才漏磁；一次磁化只能覆盖一个方向。</li><li><strong>"316 不锈钢为什么不导磁？"</strong> 奥氏体是面心立方，磁畴不易形成，宏观非铁磁。</li><li><strong>"磁粉能查内部缺陷吗？"</strong> 只能到近表面（通常几毫米），不是体积方法。</li><li><strong>"算出来的电流够不够？"</strong> 公式只是起点，必须用指示器/参考试片验证。</li></ol>
+<hr>
+
+<div class="demo">
+  <h4>动手试：裂纹与磁力线的夹角</h4>
+  <p class="hint">拖动滑块改变裂纹相对磁力线的角度。漏磁强度约与 sin²θ 成正比——所以每个区域要转 90° 测两次。</p>
+  <label>夹角 θ = <span id="fieldVal"></span>°</label>
+  <input type="range" id="fieldAngle" min="0" max="90" step="1" value="30">
+  <svg id="fieldSvg" width="400" height="120" viewBox="0 0 400 120"></svg>
+  <div style="background:#e9eef6;border-radius:6px;height:22px;margin-top:8px;overflow:hidden">
+    <div id="fieldBar" style="height:22px;background:#b02a2a;width:20%"></div>
+  </div>
+  <div class="out" id="fieldOut"></div>
+  <div class="caption">示意图：蓝虚线 = 磁力线方向，红线 = 裂纹；条长 = 相对漏磁强度。</div>
+</div>
+<h3>7. 本节需要的模态（写 HTML 时实现）</h2>
+<table><thead><tr><th>演示</th><th>演示的因果</th><th>最小可懂标准</th></tr></thead><tbody><tr><td>磁场方向滑块（0°→90°）看铁粉聚集强度</td><td>裂纹与磁力线夹角决定漏磁强弱</td><td>能解释"为什么要转 90° 测两次"</td></tr><tr><td>线圈算例计算器（输入 L、D、N → I）</td><td>公式是起点，需验证</td><td>能算对、能说出公式的适用区间</td></tr></tbody></table>
+<hr>
+<h3>8. 讲台上这样说（可直接照念）</h2>
+<blockquote><p>第二种方法，磁粉。前提只有一个：材料必须是铁磁的，碳钢、低合金钢、铸铁、镍可以；铝、铜、奥氏体不锈钢不行——316 不锈钢看着像钢，其实不导磁，磁粉吸不住。</p><p>原理叫漏磁。铁磁材料里磁力线走得很顺，遇到裂纹——裂纹里是空气，磁导率很低——磁力线被迫绕路，从表面漏出来，把撒上去的铁粉吸住，就显出裂纹形状。</p><p>关键规则：裂纹必须横着切断磁力线才明显。所以每个地方要磁化两次，磁场方向转 90 度。你们以后看检测报告，看到"纵向、周向各一次"就是这个原因。</p><p>算例也给了一个经验公式，线圈安匝数等于 45000 除以长径比。算出来 1125 安培。但记住：这是经验公式，只是起点，现场必须用磁场指示器或标准试片验证——slide 上也写了这句。</p></blockquote>
+<hr>
+<h3>9. 如果你只记一件事</h2>
+<blockquote><p><strong>磁粉 = 磁化铁磁件 + 撒铁粉 + 看漏磁；裂纹必须横跨磁力线，所以每个区域要转 90° 测两次；非铁磁材料直接出局。</strong></p></blockquote>
+<hr>
+<h3>10. 来源</h2>
+<ul><li><code>[slide]</code>：<code>sources/topic2.pdf</code> P11–P16</li><li><code>[补]</code> Hellier, <em>Handbook of Nondestructive Evaluation</em>, 3rd ed.（MT 章：磁化方式、磁场强度、退磁）</li><li><code>[补]</code> ASTM E1444 / E709、ASME BPVC Section V Art.7、ISO 9934 系列</li><li><code>[补]</code> NDT.net 技术讨论：安匝数经验公式的写法差异与"必须验证"（forum 帖 38105）</li><li><code>[推断]</code> 磁畴、居里点、奥氏体非铁磁为材料学通识</li><li>待核：ASTM E1444 系数的准确表述、ISO 9934 条款编号</li></ul>
+</section><section id="ut">
+<div class="chip part-C">第 4 节 · 超声 UT · P17–P22</div>
+<h2>第 4 节 · 超声检测（UT）：用回声量出缺陷有多深</h2>
+<blockquote><p>覆盖 P17–P22　｜　本节目标：讲完能算缺陷深度、能解释"为什么必须涂耦合剂"、能讲清 Hatfield 事故的因果。</p></blockquote>
+<hr>
+<h3>0. 先抛问题</h2>
+<p>一个 30 mm 厚的钢板，内部 20 mm 深处有裂纹。你看不见、摸不着，也不能剖开。</p>
+<p><strong>怎么在不破坏它的前提下，不仅知道"有"，还知道"在哪一毫米"？</strong> 答案：给它发一束声波，<strong>用回声的时间差算距离</strong>——和蝙蝠、和医院的 B 超是同一个原理。</p>
+<hr>
+<h3>1. 幻灯片原话（P18–P22）</h2>
+<blockquote><p><strong>[slide] P18 脉冲回波</strong>：探头向零件发射短脉冲（通常 1–10 MHz）；声波从缺陷和底面反射；<strong>回波时间给深度，回波高度与反射体大小有关</strong>。探头与工件之间有一层耦合剂（凝胶或水）。</p><p><strong>[slide] P19 算例</strong>：<span class="math">d = v·t/2</span>，除以 2 是因为声波往返。典型纵波声速：钢 5920、铝 6320、水 1480 m/s。例：钢板上缺陷回波 6.8 µs、底波 10.1 µs → 缺陷深约 20 mm，板厚约 30 mm。</p><p><strong>[slide] P20 探头与技术</strong>：直探头（0°）查厚度、分层、平行于表面的缺陷；斜探头（剪切波，45°–70°）查焊缝的未熔合、裂纹、未焊透；先进技术：相控阵 PAUT（电子偏转声束）、TOFD（衍射时差测缺陷高度）。</p><p><strong>[slide] P21 案例 Hatfield</strong>：2000 年 10 月英国高速列车在 Hatfield 附近弯道脱轨，4 人死亡。原因是轮轨反复接触在<strong>轨距角</strong>产生滚动接触疲劳（RCF）小裂纹，已知但未及时换轨；<strong>浅层表面裂纹会把深部裂纹"遮"住</strong>，超声束被浅裂纹反射，看不到下面。教训：现在用超声检测列车，并组合涡流与目视。</p><p><strong>[slide] P22 Q3</strong>：25 mm 厚钢板（v=5920 m/s），缺陷回波 4.0 µs，问深度、底波时间、忘记涂耦合剂会怎样。</p></blockquote>
+<hr>
+<h3>2. 拆黑箱</h2>
+<h4>2.1 为什么必须涂耦合剂：算一下反射率</h3>
+<p>声波从一种介质进入另一种介质时，反射强度由<strong>声阻抗</strong> <span class="math">Z=ρv</span> 决定：</p>
+<div class="formula">R=left(<span class="frac"><span class="num">Z<sub>2</sub>-Z<sub>1</sub></span><span class="den">Z<sub>2</sub>+Z<sub>1</sub></span></span>right)<sup>2</sup></div>
+<ul><li>钢：<span class="math">ρ≈7850 kg/m<sup>3</sup></span>，<span class="math">v=5920 m/s</span> → <span class="math">Z ≈46.5×10<sup>6</sup> kg/(m<sup>2</sup>s)</span>（约 46.5 MRayl）</li><li>空气：<span class="math">ρ≈1.2</span>，<span class="math">v ≈343</span> → <span class="math">Z ≈0.0004</span> MRayl</li></ul>
+<p>代入：<span class="math">R ≈99.997%</span>。也就是说，<strong>探头和钢之间只要隔着一层空气，几乎全部声能都被反射回去，一声都进不去</strong>。</p>
+<p>耦合剂（凝胶、机油、水）的作用就是<strong>把这层空气挤走</strong>，让声波从探头进入工件。没有耦合剂 = 没有信号。</p>
+<h4>2.2 纵波、横波、斜探头：为什么要"斜着打"</h3>
+<ul><li><strong>纵波（压缩波）</strong>：质点振动方向与传播方向一致，速度最快——直探头用它测厚度、查平行于表面的缺陷。</li><li><strong>横波（剪切波）</strong>：振动方向垂直传播方向，速度约为纵波一半。</li><li><strong>斜探头</strong>：声波斜着入射，在界面发生折射和<strong>波型转换</strong>，进入工件后变成横波，可以斜着"扫"焊缝坡口——这是查焊缝未熔合、侧壁裂纹的标准手段。常用折射角 45°、60°、70°。</li></ul>
+<h4>2.3 A/B/C 扫描：同一束声波，三种画法</h3>
+<table><thead><tr><th>显示</th><th>画的是什么</th><th>用途</th></tr></thead><tbody><tr><td><strong>A 扫描</strong></td><td>横轴时间（深度）、纵轴回波高度</td><td>最常用：判有无、量深度</td></tr><tr><td>B 扫描</td><td>剖面图（深度 vs 探头位置）</td><td>看缺陷沿扫查方向的分布</td></tr><tr><td>C 扫描</td><td>俯视图（平面投影）</td><td>看缺陷在平面上的形状</td></tr></tbody></table>
+<p>先进技术：<strong>PAUT</strong>（相控阵，用多个晶片电子偏转/聚焦声束，可成像）、<strong>TOFD</strong>（衍射时差法，利用缺陷上下端的衍射波精确测高度）。</p>
+<h4>2.4 Hatfield：为什么"查过"却还是断了</h3>
+<p>滚动接触疲劳（RCF）先在轨距角产生<strong>很浅的表面裂纹</strong>。超声从轨头表面打下去时：</p>
+<ol><li>浅裂纹先反射一部分声能 → 在 A 扫描上产生一个早期回波；</li><li>这部分能量被"挡"住，继续向下的能量减少；</li><li>深部裂纹的回波变弱，可能淹没在噪声里；</li><li>加上 RCF 裂纹走向复杂、检测周期与判据问题，最终漏检。</li></ol>
+<p><code>[补]</code> 这不是"超声不行"，而是"<strong>任何方法都有方向与遮挡的限制</strong>"。所以现代铁路用<strong>超声检测列车 + 涡流 + 目视</strong>组合，并缩短关键区段的检测周期。</p>
+<hr>
+<h3>3. 手算：把 P19 和 Q3 都算一遍</h2>
+<h4>P19（slide 算例）</h3>
+<div class="formula">d=<span class="frac"><span class="num">v·t</span><span class="den">2</span></span></div>
+<ul><li>缺陷：<span class="math">5920 ×6.8×10<sup>-6</sup> / 2 = 0.0201 m ≈20 mm</span></li><li>底波：<span class="math">5920 ×10.1×10<sup>-6</sup> / 2 = 0.0299 m ≈30 mm</span></li></ul>
+<p>除以 2 是因为声波<strong>下去再上来</strong>，走的是两倍距离。</p>
+<h4>Q3（讨论题）</h3>
+<p>25 mm 厚钢板，缺陷回波 4.0 µs：</p>
+<ol><li>缺陷深度：<span class="math">5920×4.0×10<sup>-6</sup>/2 = 0.01184 m ≈11.8 mm</span></li><li>底波时间：<span class="math">t = 2×0.025/5920 = 8.45×10<sup>-6</sup> s ≈8.5 µs</span></li><li>忘记涂耦合剂：声波进不去 → <strong>屏幕上只剩始波，没有缺陷波也没有底波</strong>（或全是噪声），等于什么都没测。</li></ol>
+<hr>
+<h3>4. 教读数字</h2>
+<ul><li><strong>1–10 MHz</strong>：频率越高，波长越短、分辨力越好，但衰减越大、穿透越浅。</li><li><strong>5920 / 6320 / 1480 m/s</strong>：钢/铝/水的<strong>纵波</strong>声速典型值，随合金与温度变化（铝的数值不同手册差异较大，写作时注明"典型值"）。</li><li><strong>盲区</strong>：靠近表面的一段区域，始波太宽盖住缺陷回波——薄件、近表面缺陷容易漏。</li><li><strong>回波高度 ≠ 缺陷大小</strong>：高度与反射体<strong>面积、方向、深度</strong>都有关；定量要靠对比试块或 DGS/AVG 曲线。</li></ul>
+<hr>
+<h3>5. 落到工程决定</h2>
+<ol><li><strong>单面接触就能测</strong>：这是 UT 相对 RT 的最大优势（管道、容器、轨道）。</li><li><strong>测厚仪</strong>：从一侧测剩余壁厚，是腐蚀减薄监测的日常手段。</li><li><strong>焊缝检测</strong>：斜探头扫查 + 按标准评定（ISO 17640 等）。</li><li><strong>限制</strong>：需要耦合剂、依赖操作者水平、粗晶材料噪声大、薄件/复杂几何困难、基础 A 扫描没有永久图像。</li></ol>
+<hr>
+<h3>6. 学生最容易卡住的四个点</h2>
+<ol><li><strong>"为什么要除以 2？"</strong> 声波往返，时间是两倍路程。</li><li><strong>"回波高是不是缺陷大？"</strong> 不一定，还取决于方向和深度；定量要用试块/曲线。</li><li><strong>"为什么焊缝要用斜探头？"</strong> 直探头垂直打入，查不到坡口侧壁的未熔合；斜探头让声束斜穿焊缝，才能碰到那些面。</li><li><strong>"没涂耦合剂会显示什么？"</strong> 什么都没有——声波在空气界面几乎全反射。</li></ol>
+<hr>
+
+<div class="demo">
+  <h4>动手试：拖动探头，看 A 扫描怎么变</h4>
+  <p class="hint">上方是钢板剖面（厚 40 mm，15 mm 深处一条裂纹）；下方是 A 扫描。把探头拖到缺陷正上方，缺陷回波才会出现。</p>
+  <label>探头位置 x = <span id="utVal"></span> mm</label>
+  <input type="range" id="utPos" min="0" max="60" step="1" value="10">
+  <canvas id="utCanvas" width="640" height="230"></canvas>
+  <div class="out" id="utOut"></div>
+  <div class="caption">示意模型：钢纵波声速 5920 m/s，波束覆盖半宽 6 mm；缺陷深度与板厚均由回波时间反推。</div>
+</div>
+<h3>7. 本节需要的模态（写 HTML 时实现）</h2>
+<table><thead><tr><th>演示</th><th>演示的因果</th><th>最小可懂标准</th></tr></thead><tbody><tr><td>拖动探头扫过带缺陷的板：剖面 + A 扫描同步</td><td>回波时间→深度；探头位置→回波出现/消失</td><td>能读出缺陷深度与板厚</td></tr><tr><td>耦合剂开关对比</td><td>钢/空气声阻抗差 → 无耦合剂无信号</td><td>能算出反射率约 99.99%</td></tr><tr><td>探头角度切换（0°/45°/60°/70°）</td><td>斜探头为什么要斜着打</td><td>能说出斜探头查什么</td></tr></tbody></table>
+<hr>
+<h3>8. 讲台上这样说（可直接照念）</h2>
+<blockquote><p>第三种方法，超声。它的思路特别像蝙蝠：发一束声波，听回声。</p><p>探头里是压电晶片，通电振动，发出 1 到 10 兆赫的声波。声波遇到缺陷反射回来，仪器记下时间。因为声波下去再上来走了两倍距离，所以深度等于声速乘时间再除以 2。</p><p>算一下 slide 的例子：6.8 微秒的回波、钢里声速 5920，深度就是 5920×6.8×10⁻⁶÷2，大约 20 毫米；底波 10.1 微秒，板厚约 30 毫米。</p><p>有个关键细节：必须涂耦合剂。为什么？算一下就明白——钢的声阻抗大约是空气的十万倍，中间只要有一层空气，99.99% 以上的声能被反射掉，声波根本进不去。所以耦合剂不是"润滑"，是把空气挤走。</p><p>最后看 Hatfield 事故：轨距角先出现很浅的疲劳裂纹，超声打下去，浅裂纹先反射，把能量挡住了，下面的深裂纹反而看不见。这不是超声没用，是提醒我们：任何方法都有盲区，所以关键部位要组合检测。</p></blockquote>
+<hr>
+<h3>9. 如果你只记一件事</h2>
+<blockquote><p><strong>超声 = 发脉冲、收回声、d = v·t/2；耦合剂是声波的"入场券"；浅缺陷可能挡住深缺陷。</strong></p></blockquote>
+<hr>
+<h3>10. 来源</h2>
+<ul><li><code>[slide]</code>：<code>sources/topic2.pdf</code> P17–P22</li><li><code>[补]</code> Hellier, <em>Handbook of Nondestructive Evaluation</em>, 3rd ed.（UT 章：声阻抗、探头、A/B/C 扫描）</li><li><code>[补]</code> ISO 17640（焊缝超声检测）、ASME BPVC Section V Art.4/Art.5、ISO 9712（人员资格）</li><li><code>[补]</code> HSE/RSSB 关于 2000 年 Hatfield 脱轨的调查报告（RCF 与检测问题）</li><li><code>[推断]</code> 声阻抗与反射率计算为标准声学公式；Hatfield 死亡人数以官方报告为准</li><li>待核：Hatfield 死亡人数与日期细节、铝的纵波声速取值</li></ul>
+</section><section id="rt">
+<div class="chip part-D">第 5 节 · 射线 RT · P23–P28</div>
+<h2>第 5 节 · 射线检测（RT）：为什么底片上"黑"的地方反而是空的</h2>
+<blockquote><p>覆盖 P23–P28　｜　本节目标：讲完能解释黑度来源、能算活度衰减与曝光时间、能说清 RT 与 UT 的分工。</p></blockquote>
+<hr>
+<h3>0. 先抛问题</h2>
+<p>把一块 30 mm 厚的钢放到 X 光下，底片上出现一片<strong>更黑</strong>的区域。黑的代表什么？</p>
+<p>直觉上"黑 = 有东西"，<strong>但射线检测恰好相反：黑 = 射线穿过去更多 = 那里更空</strong>。本节就把这个"反直觉"讲透，再讲清 γ 源为什么会"越用越弱"。</p>
+<hr>
+<h3>1. 幻灯片原话（P24–P28）</h2>
+<blockquote><p><strong>[slide] P24 差异吸收</strong>：射线穿过工件到达另一侧的胶片或数字探测器。吸收取决于路径上材料的<strong>密度和厚度</strong>。空腔材料少 → 更多射线到达底片 → <strong>更黑</strong>。高密度夹杂（如钨）→ 更白。图示为真实底片，气孔呈黑点（图源 Carestream, NDT Images guide）。</p><p><strong>[slide] P25 X 射线 vs γ 射线</strong>：X 射线管（kV、mA）能量可调、需供电、可关闭；放射源 Ir-192 / Se-75 / Co-60，能量固定、不需供电、非常便携、<strong>永远在发射</strong>（存在屏蔽容器中）。</p><p><strong>[slide] P26 算例</strong>：<span class="math">A=A<sub>0</sub>(tfrac12)<sup>t/T<sub>1/2</sub></sup></span>。Ir-192 半衰期约 74 天，初始 100 Ci，148 天后 → 25 Ci；<strong>曝光时间与活度成反比 → 需要 4 倍时间</strong>。</p><p><strong>[slide] P27 优缺点</strong>：优点——内部缺陷直接成像、有永久记录、几乎适用任何材料、对体积型缺陷（气孔、夹渣、夹杂）极佳；限制——辐射危害、需要两侧接近、平面裂纹需与射线方向大致一致才显示、单张底片深度信息少、胶片处理耗时。</p><p><strong>[slide] P28 Q4</strong>：跨省天然气管线，每条环焊缝都要检，RT 还是 UT？从安全、缺陷类型、记录与成本三方面辩论。</p></blockquote>
+<hr>
+<h3>2. 拆黑箱</h2>
+<h4>2.1 吸收的物理：指数衰减</h3>
+<p>单色射线穿过厚度 <span class="math">x</span> 的均匀材料，强度按指数衰减：</p>
+<div class="formula">I = I<sub>0</sub>,e<sup>-µx</sup></div>
+<ul><li><span class="math">µ</span>：线衰减系数，随材料密度与射线能量变化</li><li>材料越厚、密度越大 → 透过越少 → 底片越白（或数字图像越暗，取决于显示约定）</li></ul>
+<p><strong>注意一个容易混的点</strong>：胶片是"负片"——<strong>到达射线越多，胶片越黑</strong>。所以：</p>
+<ul><li>空腔（气孔、缩孔）穿过更多射线 → <strong>底片更黑</strong></li><li>高密度夹杂（钨、铅）穿过更少 → <strong>底片更白</strong></li></ul>
+<h4>2.2 X 射线与 γ 射线：一个能关，一个关不掉</h3>
+<table><thead><tr><th></th><th>X 射线</th><th>γ 射线</th></tr></thead><tbody><tr><td>来源</td><td>X 射线管（高压加速电子打靶）</td><td>放射性同位素衰变</td></tr><tr><td>能量</td><td>由管电压 kV 决定，<strong>可调</strong></td><td>由核素决定，<strong>固定</strong></td></tr><tr><td>供电</td><td>需要</td><td>不需要，便携</td></tr><tr><td>关闭</td><td>断电即停</td><td><strong>不能关</strong>，只能放回屏蔽容器</td></tr><tr><td>典型</td><td>车间、薄件、对比度好</td><td>野外管道、厚件、偏远现场</td></tr></tbody></table>
+<p>常见核素：<strong>Ir-192</strong>（半衰期约 74 天，最常用）、<strong>Se-75</strong>（约 120 天）、<strong>Co-60</strong>（约 5.27 年，能量高，用于厚件）。</p>
+<h4>2.3 活度、居里与"越用越弱"</h3>
+<ul><li>活度单位：<strong>Ci（居里）</strong>，1 Ci = 3.7×10¹⁰ Bq = 37 GBq</li><li>半衰期：活度降到一半所需时间</li><li>每过一个半衰期，活度减半，<strong>要得到同样的曝光量，时间就要加倍</strong></li></ul>
+<h4>2.4 为什么"平面裂纹"是 RT 的软肋</h3>
+<p>射线沿直线穿过工件。如果裂纹面<strong>平行于射线方向</strong>（射线顺着裂缝穿过去），路径上"少掉的厚度"只有裂纹的<strong>宽度</strong>（几十微米），对比度几乎为零——底片上什么都看不出。</p>
+<p>反之，裂纹面与射线方向接近垂直时，路径上少掉的厚度明显，才容易发现。<strong>这就是"缺陷方向决定检出"的第二个例子</strong>（第一个是磁粉）。</p>
+<hr>
+<h3>3. 手算：活度衰减与曝光时间</h2>
+<div class="formula"><span class="frac"><span class="num">t</span><span class="den">T<sub>1/2</sub></span></span>=<span class="frac"><span class="num">148</span><span class="den">74</span></span>=2quadRightarrowquad A=A<sub>0</sub>left(frac12right)<sup>2</sup>=100×frac14=25 Ci</div>
+<p>曝光时间与到达探测器的射线强度成反比：</p>
+<div class="formula">E ∝<span class="frac"><span class="num">1</span><span class="den">A</span></span>quadRightarrowquad <span class="frac"><span class="num">E<sub>148</sub></span><span class="den">E<sub>0</sub></span></span>=<span class="frac"><span class="num">A<sub>0</sub></span><span class="den">A<sub>148</sub></span></span>=<span class="frac"><span class="num">100</span><span class="den">25</span></span>=4</div>
+<p><strong>结论</strong>：同样拍一张合格的片子，148 天后要多曝 4 倍时间。工程上要按"源用到什么活度"排计划、算工期。</p>
+<p>换算：100 Ci = 3.7 TBq = 3700 GBq；25 Ci ≈ 925 GBq。</p>
+<hr>
+<h3>4. 教读数字</h2>
+<ul><li><strong>1 Ci = 37 GBq</strong>：Ci 是旧单位，现代报告多用 Bq/GBq；读文献时注意换算。</li><li><strong>半衰期</strong>：Ir-192 ≈74 天意味着<strong>每 2.5 个月活度减半</strong>，源要定期更换。</li><li><strong>单张底片的深度信息有限</strong>：需要双壁单影、双壁双影、多角度等技巧来定位深度。</li><li><strong>黑度</strong>：不是越黑越好，标准对底片黑度有范围要求（保证对比度与判读）。</li></ul>
+<hr>
+<h3>5. 落到工程决定</h2>
+<ol><li><strong>选源看厚度</strong>：薄件用 X 射线（能量可调、对比度好）；厚件/野外用 Co-60 或 Ir-192。</li><li><strong>安全先行</strong>：辐射分区、许可证、屏蔽、ALARA（合理可行尽量低）原则；γ 源"关不掉"，管理更严格。</li><li><strong>记录价值</strong>：RT 有永久底片/数字图像，适合需要审计的场合（管道、压力容器）。</li><li><strong>与 UT 分工</strong>：体积型缺陷（气孔、夹渣）RT 更直观；平面型缺陷（裂纹、未熔合）UT 通常更敏感。</li></ol>
+<hr>
+<h3>6. 学生最容易卡住的四个点</h2>
+<ol><li><strong>"黑不是有东西吗？"</strong> 胶片是负片：到达射线越多越黑，所以黑 = 空（气孔、缩孔）。</li><li><strong>"为什么钨夹杂是白的？"</strong> 钨密度高、吸收强，到达底片的射线少，所以偏白。</li><li><strong>"γ 源为什么不能关？"</strong> 衰变是自发的，只能靠屏蔽容器（源罐/钨盒）挡住射线。</li><li><strong>"为什么单张片子看不出深度？"</strong> 底片是二维投影，深度信息被压扁；要靠多角度或多技术补偿。</li></ol>
+<hr>
+
+<div class="demo">
+  <h4>动手试：底片为什么"黑 = 空"</h4>
+  <p class="hint">拖动改变板内空腔的厚度。空腔越大，穿过的射线越多，底片上越黑。</p>
+  <label>空腔厚度 = <span id="rtVal"></span> mm（板厚 20 mm）</label>
+  <input type="range" id="rtVoid" min="0" max="8" step="0.5" value="3">
+  <svg id="rtSvg" width="360" height="90" viewBox="0 0 360 90"></svg>
+  <div class="out" id="rtOut"></div>
+  <div class="caption">示意模型：I = I₀e^(−µx)，µ 取 0.03 mm⁻¹（仅为教学示意，实际随能量与材料变化）。</div>
+</div>
+<div class="demo">
+  <h4>动手试：γ 源衰变与曝光时间</h4>
+  <p class="hint">Ir-192 半衰期按 74 天计，初始活度 100 Ci。拖动天数，看活度和所需曝光时间怎么变。</p>
+  <label>经过天数 = <span id="gVal"></span> 天</label>
+  <input type="range" id="gDays" min="0" max="240" step="1" value="74">
+  <svg id="gSvg" width="360" height="130" viewBox="0 0 360 130"></svg>
+  <div class="out" id="gOut"></div>
+  <div class="caption">示意模型：A = A₀(1/2)^(t/T½)；曝光时间与活度成反比。</div>
+</div>
+<h3>7. 本节需要的模态（写 HTML 时实现）</h2>
+<table><thead><tr><th>演示</th><th>演示的因果</th><th>最小可懂标准</th></tr></thead><tbody><tr><td>壁厚/空腔尺寸滑块 → 底片灰度条</td><td>\(\mu x\) 决定透过率，空腔更黑</td><td>能预测"空腔变大→更黑、壁变厚→更白"</td></tr><tr><td>活度衰变滑块（天数 → Ci → 曝光倍数）</td><td>半衰期与曝光时间反比</td><td>能算出 2 个半衰期后要曝 4 倍</td></tr><tr><td>裂纹倾角滑块 → 底片对比度</td><td>平面缺陷方向对 RT 的影响</td><td>能说出"垂直射线才看得见"</td></tr></tbody></table>
+<hr>
+<h3>8. 讲台上这样说（可直接照念）</h2>
+<blockquote><p>第四种方法，射线。它的原理是"差异吸收"——射线穿过去，材料越厚越密，被吸收得越多，到达底片上的就越少。</p><p>注意底片是负片，所以有几个反直觉的地方：底片上黑的地方，是射线穿过去更多的地方——那里是空的，比如气孔、缩孔。反过来，钨这种又密又重的夹杂，吸收强，底片上反而偏白。这个方向千万别记反。</p><p>第二个反直觉的是 γ 源。X 射线机关了电就不发射，但放射源不能关——衰变一直在发生，只能放回屏蔽罐。而且它会越来越弱：Ir-192 半衰期大约 74 天，100 居里放 148 天，正好两个半衰期，剩下 25 居里，要拍同一张片子得曝四倍时间。所以工地上排计划，是要算源还够不够用的。</p><p>最后说软肋：平面裂纹如果顺着射线方向，射线少穿的只有裂纹宽度，底片上看不出来。所以 RT 对气孔这类体积型缺陷最强，平面裂纹要靠超声或换角度。</p></blockquote>
+<hr>
+<h3>9. 如果你只记一件事</h2>
+<blockquote><p><strong>RT = 差异吸收 + 负片：黑=空（气孔）、白=密（钨夹杂）；γ 源会衰减，活度减半就要曝双倍时间；贴平射线的裂纹看不见。</strong></p></blockquote>
+<hr>
+<h3>10. 来源</h2>
+<ul><li><code>[slide]</code>：<code>sources/topic2.pdf</code> P23–P28</li><li><code>[补]</code> Hellier, <em>Handbook of Nondestructive Evaluation</em>, 3rd ed.（RT 章：衰减、几何不清晰度、胶片与数字）</li><li><code>[补]</code> ISO 5579 / ISO 17636（RT 通用与焊缝）、ASTM E94 / E1742、ASME BPVC Section V Art.2</li><li><code>[补]</code> 核素半衰期（Ir-192 ≈73.8 d、Se-75 ≈120 d、Co-60 ≈5.27 y）——常引数值，写作时以核数据表核对</li><li><code>[补]</code> IAEA 辐射安全基础（活度单位、ALARA、剂量分区）</li><li>待核：各核素精确半衰期、1 Ci 精确换算（3.7×10¹⁰ Bq）</li></ul>
+</section><section id="choice">
+<div class="chip part-E">第 6 节 · 选择方法 · P29–P34</div>
+<h2>第 6 节 · 选方法的逻辑：给一个工件，怎么定方案</h2>
+<blockquote><p>覆盖 P29–P34　｜　本节目标：讲完能面对任意工件，说出"用什么、为什么、按什么顺序"。</p></blockquote>
+<hr>
+<h3>0. 先抛问题</h2>
+<p>四种方法你都懂了。现在给你一个<strong>20 mm 厚的碳钢压力容器</strong>，有对接焊缝和接管焊缝。你怎么定检验方案？</p>
+<p>这一节把前四节的知识压缩成一张决策图，并用 Q5 走一遍完整流程。</p>
+<hr>
+<h3>1. 幻灯片原话（P30–P34）</h2>
+<blockquote><p><strong>[slide] P30 四方法对比</strong>：原理 / 材料 / 缺陷位置 / 最适合 / 可达性 / 记录 / 主要危害。</p><p><strong>[slide] P31 选择指南</strong>：先问缺陷可能在哪——<strong>开口到表面</strong> → 是否铁磁？是 → MPT，否 → LPT；<strong>在内部</strong> → 缺陷形状？平面（裂纹、未熔合）→ UT；体积（气孔、夹渣）→ RT。还要考虑：可达性、厚度、安全、成本、速度、规范要求、是否要永久记录。</p><p><strong>[slide] P32 五条要点</strong>：① LPT 毛细作用，仅表面开口、非多孔材料；② MPT 漏磁，铁磁材料表面/近表面，磁场须横跨裂纹；③ UT 声波反射，<span class="math">d=v·t/2</span>，擅长平面缺陷、单面可达、无辐射；④ RT 差异吸收，有永久图像、适合体积型缺陷，但需辐射安全；⑤ <strong>没有方法能查全部，关键件用互补方法</strong>。</p><p><strong>[slide] P33 Q5</strong>：20 mm 厚碳钢压力容器，对接焊缝 + 接管焊缝，写检验方案。</p><p><strong>[slide] P34 课后</strong>：读 Hellier（PT/MT/UT/RT 章节）；练三个算例（UT 深度、MPT 线圈电流、γ 源衰变）；下一讲 Topic 3 缺陷与验收。</p></blockquote>
+<hr>
+<h3>2. 四方法对比（把这张表背下来）</h2>
+<table><thead><tr><th>维度</th><th>LPT</th><th>MPT</th><th>UT</th><th>RT</th></tr></thead><tbody><tr><td>原理</td><td>毛细作用</td><td>漏磁</td><td>声波反射</td><td>差异吸收</td></tr><tr><td>材料</td><td>非多孔（几乎任何）</td><td>仅铁磁</td><td>多数（能传声）</td><td>几乎全部</td></tr><tr><td>缺陷位置</td><td>表面开口</td><td>表面+近表面</td><td>内部+表面</td><td>内部</td></tr><tr><td>最适合</td><td>细小表面裂纹</td><td>钢的表面裂纹</td><td>平面型缺陷、测厚</td><td>体积型缺陷</td></tr><tr><td>可达性</td><td>一面</td><td>一面</td><td><strong>单面即可</strong></td><td><strong>需两侧</strong></td></tr><tr><td>记录</td><td>照片</td><td>照片</td><td>数据文件</td><td>胶片/数字图像（永久）</td></tr><tr><td>主要危害</td><td>化学品</td><td>电气</td><td>低</td><td><strong>辐射</strong></td></tr></tbody></table>
+<hr>
+<h3>3. 决策流程（三问定方法）</h2>
+<p>``<code> 缺陷可能在哪？ ├─ 开口到表面 │   ├─ 材料是铁磁？→ 是：MPT（快、能到近表面） │   └─ 否 → LPT（不锈钢、铝、钛、玻璃…） └─ 在内部 ├─ 平面型（裂纹、未熔合、未焊透）→ UT（对方向敏感，但单面可达） └─ 体积型（气孔、夹渣、缩孔）→ RT（对比直观、有永久记录） </code>``</p>
+<p>补充考虑：<strong>可达性</strong>（能不能两边接近）、<strong>厚度</strong>（RT 要够能量、UT 要够穿透）、<strong>安全</strong>（辐射分区）、<strong>成本与速度</strong>、<strong>规范要求</strong>、<strong>是否要永久记录</strong>。</p>
+<hr>
+<h3>4. Q5 走一遍：20 mm 碳钢压力容器</h2>
+<p><strong>工件</strong>：20 mm 厚碳钢，对接焊缝 + 接管焊缝。<strong>目标</strong>：确认焊缝无超标缺陷。</p>
+<table><thead><tr><th>检验对象</th><th>方法</th><th>理由</th></tr></thead><tbody><tr><td>焊缝表面 + 热影响区</td><td><strong>MT</strong>（磁轭法，两方向各一次）</td><td>碳钢铁磁；查表面/近表面裂纹、咬边</td></tr><tr><td>对接焊缝内部</td><td><strong>UT</strong>（斜探头）或 <strong>RT</strong></td><td>UT 对裂纹/未熔合敏感且单面可达；RT 对气孔直观、留永久记录</td></tr><tr><td>接管焊缝（几何复杂）</td><td><strong>UT + MT</strong>；必要时 <strong>PT</strong></td><td>接管处几何复杂，RT 布置困难；UT 灵活</td></tr><tr><td>母材/筒体壁厚</td><td><strong>UT 测厚</strong></td><td>监测腐蚀减薄</td></tr><tr><td>全部</td><td><strong>VT</strong>（目视）</td><td>任何检测前先目视，成本最低</td></tr></tbody></table>
+<p><strong>顺序</strong>：目视 → 表面方法（MT/PT）→ 体积方法（UT/RT）→ 发现超标缺陷 → 返修 → 返修后<strong>重新检测</strong>（同一方法或更严格的方法）。</p>
+<p><strong>判据</strong>：按规范（ASME / ISO / 项目技术条件）规定的验收等级判定；<strong>发现指示 ≠ 判废</strong>，要看是否超过验收标准。</p>
+<hr>
+<h3>5. 教读数字</h2>
+<ul><li><strong>20 mm</strong>：这个厚度 RT 需要合适能量的源（Ir-192 或 X 射线），UT 用斜探头完全够。</li><li><strong>检验比例</strong>：规范会规定 100% 还是抽检；关键设备通常 100%。</li><li><strong>返修后复检</strong>：返修区必须重新检测，且通常扩大检测范围。</li></ul>
+<hr>
+<h3>6. 学生最容易卡住的三个点</h2>
+<ol><li><strong>"是不是选最贵的方法最保险？"</strong> 不是。选<strong>能覆盖目标缺陷且成本可接受</strong>的方法，规范才是判据。</li><li><strong>"发现缺陷就报废？"</strong> 不。先看是否超过验收标准；很多指示在标准允许范围内。</li><li><strong>"一种方法查完就够了？"</strong> 关键件不够。表面 + 内部、不同物理通道互补，才叫"检到位"。</li></ol>
+<hr>
+
+<div class="demo">
+  <h4>动手试：三问定方法</h4>
+  <p class="hint">按顺序点选，下面的结论会跟着变。</p>
+  <label>① 缺陷可能在哪？</label>
+  <div class="choices">
+    <button data-k="loc" data-v="surface">开口到表面</button>
+    <button data-k="loc" data-v="inside">在材料内部</button>
+  </div>
+  <label>② 如果是表面：材料铁磁吗？</label>
+  <div class="choices">
+    <button data-k="mat" data-v="ferro">铁磁（碳钢等）</button>
+    <button data-k="mat" data-v="nonferro">非铁磁（不锈钢/铝/钛）</button>
+  </div>
+  <label>③ 如果是内部：缺陷什么形状？</label>
+  <div class="choices">
+    <button data-k="shape" data-v="planar">平面型（裂纹、未熔合）</button>
+    <button data-k="shape" data-v="volumetric">体积型（气孔、夹渣）</button>
+  </div>
+  <div class="result" id="decResult">先选缺陷位置。</div>
+</div>
+<h3>7. 本节需要的模态（写 HTML 时实现）</h2>
+<table><thead><tr><th>演示</th><th>演示的因果</th><th>最小可懂标准</th></tr></thead><tbody><tr><td>可点击决策树（表面/内部 → 铁磁/非铁磁 → 平面/体积）</td><td>三问定方法</td><td>能给任意工件选出方法并说明理由</td></tr><tr><td>压力容器剖面图（点击部位显示推荐方法）</td><td>同一工件不同部位用不同方法</td><td>能解释"为什么接管用 UT 而不用 RT"</td></tr></tbody></table>
+<hr>
+<h3>8. 讲台上这样说（可直接照念）</h2>
+<blockquote><p>最后一节，怎么选方法。其实就三问。</p><p>第一问：缺陷可能在哪？开口到表面，还是内部？开口的用表面方法。第二问：如果是表面，材料是铁磁吗？是就磁粉，不是就渗透。第三问：如果在内部，缺陷是平面型还是体积型？裂纹、未熔合这种平面型，用超声更敏感；气孔、夹渣这种体积型，射线更直观。</p><p>再补三个现实约束：能不能两边接近、有没有辐射安全条件、要不要永久记录。</p><p>拿 slide 的 Q5 举例：20 毫米碳钢压力容器。表面和热影响区用磁粉，两个方向各一次；对接焊缝内部用超声或射线；接管几何复杂，射线布置困难，用超声加磁粉；筒体还要测厚；所有检测前先目视。发现超标缺陷就返修，返修后必须重新检测。</p><p>最后一句：没有任何一种方法能查全部，关键件都是组合着检的。这句话是这一讲的总纲。</p></blockquote>
+<hr>
+<h3>9. 如果你只记一件事</h2>
+<blockquote><p><strong>选方法三问：缺陷在哪（表面/内部）→ 材料是否铁磁 → 平面型还是体积型；再叠加可达性、安全、记录要求。</strong></p></blockquote>
+<hr>
+<h3>10. 来源</h2>
+<ul><li><code>[slide]</code>：<code>sources/topic2.pdf</code> P29–P34</li><li><code>[补]</code> Hellier, <em>Handbook of Nondestructive Evaluation</em>, 3rd ed.（第 1 章：方法选择与互补）</li><li><code>[补]</code> ASME BPVC Section V、ISO 17635/17636/17640、API 1104（管道焊缝验收）</li><li><code>[补]</code> ISO 9712（人员资格与检测方法代号）</li><li><code>[推断]</code> 压力容器检验方案的典型组合为工程惯例（具体比例按项目规范）</li></ul>
+</section><section id="appendix">
+<div class="chip part-X">附录 · 讲课流程 · 速查 · 术语 · 自测 · 附 A–F</div>
+<h2>附录</h2>
+<blockquote><p>讲台用、考前用、查词用。四件套：讲课流程、方法速查、三语术语、自测题。</p></blockquote>
+<hr>
+<h3>附 A　2 小时讲课流程</h2>
+<table><thead><tr><th>时间</th><th>页码</th><th>讲什么</th><th>互动 / 提问</th></tr></thead><tbody><tr><td>0:00–0:10</td><td>P1–P5</td><td>开场：生活里的 NDT（Q1）；四种方法、四条物理通道</td><td>问："体检哪些是无损的？"</td></tr><tr><td>0:10–0:30</td><td>P6–P10</td><td>LPT：毛细作用、六步流程、渗透剂与显像剂</td><td>裂缝半径滑块；问"表面有油会怎样"</td></tr><tr><td>0:30–0:50</td><td>P11–P16</td><td>MPT：漏磁、磁场方向、线圈算例（Q2）</td><td>磁场夹角滑块；让全班算 1125 A</td></tr><tr><td>0:50–1:00</td><td>—</td><td>休息</td><td>—</td></tr><tr><td>1:00–1:25</td><td>P17–P22</td><td>UT：脉冲回波、深度算例、探头、Hatfield（Q3）</td><td>探头拖动看 A 扫描；遮蔽效应示意</td></tr><tr><td>1:25–1:45</td><td>P23–P28</td><td>RT：差异吸收、X 射线 vs γ 源、衰变算例（Q4）</td><td>壁厚/空腔滑块；活度衰减滑块</td></tr><tr><td>1:45–2:00</td><td>P29–P34</td><td>选方法：对比表、决策树、Q5 压力容器方案</td><td>决策树点击；分组给方案</td></tr></tbody></table>
+<hr>
+<h3>附 B　方法速查表</h2>
+<table><thead><tr><th>方法</th><th>输入能量</th><th>能查什么</th><th>材料限制</th><th>主要局限</th><th>相关标准（名称）</th></tr></thead><tbody><tr><td>LPT</td><td>液体（毛细）</td><td>表面<strong>开口</strong>缺陷</td><td>非多孔</td><td>必须开口；多孔材料假指示</td><td>ISO 3452、ASTM E165/E1417</td></tr><tr><td>MPT</td><td>磁场</td><td>表面 + 近表面缺陷</td><td><strong>仅铁磁</strong></td><td>必须横跨磁力线；需退磁</td><td>ISO 9934、ASTM E1444/E709</td></tr><tr><td>UT</td><td>高频声波</td><td>内部 + 表面，测厚</td><td>能传声（多数金属）</td><td>需耦合剂；依赖操作者；方向敏感</td><td>ISO 17640、ASME V Art.4/5</td></tr><tr><td>RT</td><td>X/γ 射线</td><td>内部（体积型最佳）</td><td>几乎全部</td><td>辐射；需两侧；平面裂纹看方向</td><td>ISO 5579/17636、ASME V Art.2</td></tr></tbody></table>
+<hr>
+<h3>附 C　三语术语表（英文 / 马来文 / 中文）</h2>
+<blockquote><p>马来文只收幻灯片出现过的；"—"表示幻灯片没给。</p></blockquote>
+<table><thead><tr><th>English</th><th>Bahasa Melayu</th><th>中文</th><th>一句话</th></tr></thead><tbody><tr><td>Liquid penetrant testing (LPT/PT)</td><td>ujian penusuk cecair</td><td>液体渗透检测</td><td>毛细作用把染料吸进开口</td></tr><tr><td>Magnetic particle testing (MPT/MT)</td><td>ujian zarah magnet</td><td>磁粉检测</td><td>漏磁吸住铁粉显示裂纹</td></tr><tr><td>Ultrasonic testing (UT)</td><td>ujian ultrasonik</td><td>超声检测</td><td>声波反射测深度</td></tr><tr><td>Radiographic testing (RT)</td><td>ujian radiografi</td><td>射线检测</td><td>差异吸收成像</td></tr><tr><td>Capillary action</td><td>tindakan kapilari</td><td>毛细作用</td><td>表面张力把液体拽进细缝</td></tr><tr><td>Penetrant</td><td>bahan penusuk</td><td>渗透剂</td><td>带染料/荧光的液体</td></tr><tr><td>Developer</td><td>bahan pemaju</td><td>显像剂</td><td>把缝里的渗透剂吸出来</td></tr><tr><td>Fluorescent</td><td>berpendarfluor</td><td>荧光</td><td>紫外灯下发亮，灵敏度高</td></tr><tr><td>Water-washable</td><td>boleh dibasuh air</td><td>水洗型</td><td>直接用水冲掉多余</td></tr><tr><td>Post-emulsifiable</td><td>boleh diemulsikan</td><td>后乳化型</td><td>先涂乳化剂再水洗，控制更稳</td></tr><tr><td>Solvent-removable</td><td>boleh ditanggalkan pelarut</td><td>溶剂去除型</td><td>现场喷罐常用</td></tr><tr><td>Sensitivity level</td><td>tahap kepekaan</td><td>灵敏度等级</td><td>1 低 → 4 超高</td></tr><tr><td>Dwell time</td><td>masa rendaman</td><td>停留时间</td><td>渗透剂停留 5–30 min</td></tr><tr><td>Pre-clean</td><td>pra-pembersihan</td><td>预清洗</td><td>最关键一步：开口不能被封</td></tr><tr><td>Cold shut</td><td>—</td><td>冷隔</td><td>铸件两股金属未熔合</td></tr><tr><td>Hot tear</td><td>—</td><td>热裂</td><td>凝固收缩拉裂</td></tr><tr><td>Lap</td><td>—</td><td>折叠</td><td>轧制/锻造压叠</td></tr><tr><td>Undercut</td><td>—</td><td>咬边</td><td>焊缝趾部凹槽</td></tr><tr><td>Ferromagnetic</td><td>feromagnet</td><td>铁磁</td><td>能被磁化的材料</td></tr><tr><td>Flux leakage</td><td>kebocoran fluks</td><td>漏磁</td><td>裂纹处磁通外泄</td></tr><tr><td>Longitudinal field</td><td>medan membujur</td><td>纵向场</td><td>线圈/磁轭产生</td></tr><tr><td>Circular field</td><td>medan bulat</td><td>周向场</td><td>直接通电产生</td></tr><tr><td>Coil</td><td>gegelung</td><td>线圈</td><td>磁化用</td></tr><tr><td>Yoke</td><td>—</td><td>磁轭</td><td>便携磁化</td></tr><tr><td>Head shot / prod</td><td>—</td><td>触头法/直接通电</td><td>产生周向场</td></tr><tr><td>Demagnetise</td><td>nyahmagnet</td><td>退磁</td><td>检测后消除剩磁</td></tr><tr><td>Couplant</td><td>—</td><td>耦合剂</td><td>排除空气，传声</td></tr><tr><td>Acoustic impedance</td><td>—</td><td>声阻抗</td><td>ρv，决定反射率</td></tr><tr><td>Probe / transducer</td><td>prob</td><td>探头/换能器</td><td>发射与接收声波</td></tr><tr><td>Straight probe</td><td>prob lurus</td><td>直探头</td><td>0°，测厚/分层</td></tr><tr><td>Angle probe</td><td>prob bersudut</td><td>斜探头</td><td>45°–70°，查焊缝</td></tr><tr><td>Shear wave</td><td>gelombang ricih</td><td>横波（剪切波）</td><td>斜探头在工件内产生</td></tr><tr><td>A-scan</td><td>—</td><td>A 扫描</td><td>时间—回波高度显示</td></tr><tr><td>Initial pulse</td><td>—</td><td>始波</td><td>发射脉冲</td></tr><tr><td>Back-wall echo</td><td>—</td><td>底波</td><td>底面反射</td></tr><tr><td>Pulse-echo</td><td>denyut-gema</td><td>脉冲回波</td><td>UT 基本方法</td></tr><tr><td>Phased array (PAUT)</td><td>—</td><td>相控阵</td><td>电子偏转声束</td></tr><tr><td>TOFD</td><td>—</td><td>衍射时差法</td><td>测缺陷高度</td></tr><tr><td>Rolling contact fatigue</td><td>—</td><td>滚动接触疲劳</td><td>轮轨反复接触致裂</td></tr><tr><td>Gauge corner</td><td>—</td><td>轨距角</td><td>轨头与侧面交界处</td></tr><tr><td>Differential absorption</td><td>penyerapan berbeza</td><td>差异吸收</td><td>RT 成像基础</td></tr><tr><td>Attenuation</td><td>—</td><td>衰减</td><td>射线强度指数下降</td></tr><tr><td>X-ray tube</td><td>—</td><td>X 射线管</td><td>kV 定能量、mA 定强度</td></tr><tr><td>Radioisotope</td><td>radioisotop</td><td>放射源</td><td>Ir-192、Se-75、Co-60</td></tr><tr><td>Half-life</td><td>separuh hayat</td><td>半衰期</td><td>活度减半所需时间</td></tr><tr><td>Activity</td><td>keaktifan</td><td>活度</td><td>Ci / Bq</td></tr><tr><td>Curie (Ci)</td><td>—</td><td>居里</td><td>1 Ci = 37 GBq</td></tr><tr><td>Film density</td><td>—</td><td>底片黑度</td><td>黑≠有，黑=空</td></tr><tr><td>ALARA</td><td>—</td><td>合理可行尽量低</td><td>辐射防护原则</td></tr><tr><td>Exclusion zone</td><td>—</td><td>隔离区</td><td>辐射安全管控</td></tr></tbody></table>
+<hr>
+<h3>附 D　自测题 12 道（点开看答案）</h2>
+<p><strong>1. 为什么 LPT 只能发现开口到表面的缺陷？</strong> 渗透剂没有穿透能力，只靠毛细作用沿与表面连通的缝隙进入；被封住的口（油、漆、锈、涂抹层）等于没有开口。<code>[P7]</code></p>
+<p><strong>2. 为什么预清洗是 LPT 最关键的一步？</strong> 它决定的不是"显不显"，而是"能不能进去"——表面污染物封住裂纹口，后续所有步骤都白做。<code>[P8]</code></p>
+<p><strong>3. 荧光渗透和可见染料渗透，主要差别是什么？</strong> 荧光在紫外灯下发亮、暗场观察，信噪比高、灵敏度更高；可见染料用白光，适合现场大件、不需要暗室。<code>[P9]</code></p>
+<p><strong>4. 316 奥氏体不锈钢焊缝为什么不能用磁粉？</strong> 奥氏体是面心立方、非铁磁，磁化不出漏磁场。改用渗透，或用涡流（导电材料）。<code>[P12]</code></p>
+<p><strong>5. 为什么磁粉检测每个区域要测两次？</strong> 裂纹只有横跨磁力线才产生明显漏磁；一次磁化只能覆盖一个方向，转 90° 再测才覆盖另一方向。<code>[P13]</code></p>
+<p><strong>6. 钢轴长 300 mm、直径 60 mm、线圈 4 圈，需要多大电流？</strong> <span class="math">L/D=5</span>，<span class="math">NI=45000/5=9000</span> 安匝，<span class="math">I=9000/4=2250</span> A。注意这只是起点，必须用指示器验证。<code>[P14]</code></p>
+<p><strong>7. 40 mm 厚钢板，底波应在几微秒？若缺陷回波在 6.0 µs，缺陷多深？</strong> 底波：<span class="math">t=2×0.040/5920≈13.5 µs</span>；缺陷：<span class="math">d=5920×6.0×10<sup>-6</sup>/2≈17.8 mm</span>。<code>[P19]</code></p>
+<p><strong>8. 为什么超声必须涂耦合剂？</strong> 钢与空气声阻抗差大于 10⁵ 量级，界面反射率约 99.99%，声波进不去；耦合剂排除空气。<code>[P18]</code></p>
+<p><strong>9. 射线底片上，气孔为什么是黑的，钨夹杂为什么是白的？</strong> 底片是负片：到达射线越多越黑。气孔材料少→透过多→黑；钨密度高→吸收强→透过少→白。<code>[P24]</code></p>
+<p><strong>10. Ir-192 源初始 100 Ci，经过 222 天（3 个半衰期）活度多少？曝光时间要几倍？</strong> <span class="math">A=100×(1/2)<sup>3</sup>=12.5</span> Ci；曝光时间反比于活度 → <strong>8 倍</strong>。<code>[P26]</code></p>
+<p><strong>11. 野外管道环焊缝，RT 还是 UT？</strong> 两方都能论证：RT 有永久记录、对气孔直观，但需两侧接近且有辐射管理；UT 单面可达、无辐射、对裂纹/未熔合敏感，但依赖操作者与耦合条件。规范与现场条件决定，常见做法是组合或按项目规定。<code>[P28]</code></p>
+<p><strong>12. 20 mm 碳钢压力容器检验方案？</strong> 目视 → 焊缝表面/HAZ 磁粉（两方向）→ 对接焊缝内部 UT（或 RT）→ 接管焊缝 UT+MT → 筒体 UT 测厚 → 超标缺陷返修 → 返修后重新检测。<code>[P33]</code></p>
+<hr>
+<h3>附 E　34 页覆盖表（核对用）</h2>
+<table><thead><tr><th>页码</th><th>幻灯片标题</th><th>本页位置</th></tr></thead><tbody><tr><td>P1</td><td>封面</td><td>页首</td></tr><tr><td>P2</td><td>Learning Outcomes</td><td>本节导语 / 附 A</td></tr><tr><td>P3</td><td>Lecture Plan</td><td>附 A</td></tr><tr><td>P4</td><td>Q1 生活里的 NDT</td><td>第 1 节 0–1</td></tr><tr><td>P5</td><td>Four Methods, Four Physical Principles</td><td>第 1 节 2</td></tr><tr><td>P6–P10</td><td>LPT（原理/流程/材料/适用）</td><td>第 2 节</td></tr><tr><td>P11–P16</td><td>MPT（原理/方向/算例/对比/Q2）</td><td>第 3 节</td></tr><tr><td>P17–P22</td><td>UT（原理/算例/探头/Hatfield/Q3）</td><td>第 4 节</td></tr><tr><td>P23–P28</td><td>RT（原理/源/算例/优缺点/Q4）</td><td>第 5 节</td></tr><tr><td>P29–P34</td><td>对比/选择/要点/Q5/课后</td><td>第 6 节 + 附 D 12</td></tr></tbody></table>
+<p><strong>漏页：无。</strong></p>
+<hr>
+<h3>附 F　来源与待核</h2>
+<ul><li>教材：Hellier, C. <em>Handbook of Nondestructive Evaluation</em>, 3rd ed., McGraw-Hill, 2020</li><li>标准（名称确定，条款号写作时逐条核对）：ISO 3452 系列、ISO 9934 系列、ISO 17640、ISO 5579/17636、ISO 9712、ISO 3059；ASTM E165/E1417、E1444/E709、E94/E1742；ASME BPVC Section V；API 1104</li><li>案例：HSE/RSSB 关于 2000 年 Hatfield 脱轨的调查报告</li><li>公式争议：NDT.net 论坛关于安匝数经验公式的讨论（forum 帖 38105）</li><li>核数据：Ir-192 ≈73.83 d、Se-75 ≈120 d、Co-60 ≈5.27 y（以核数据表核对）</li><li>待核：ISO 3452 类型/方法代码、ISO 3059 数值的现行版本、铝纵波声速取值、Hatfield 死亡人数细节</li></ul>
+</section>
+</main>
+</div>
+
+<footer><div class="wrap">
+  STSB3392 Topic 2 · 典型 NDT 方法精讲　｜　依据 UKMFolio 官方课件 P1–P34　｜　补充内容已按「教材 / 标准 / 百科 / 推断」分级标注<br>
+  交互演示为教学示意模型，数值与简化假设已写在各演示下方；正式检验请以标准与规范为准。
+</div></footer>
+<script>
+(function(){
+  // ---------- 1. 毛细压力 ----------
+  var cap=document.getElementById('capR'),capOut=document.getElementById('capOut'),capBar=document.getElementById('capBar');
+  function capUpdate(){
+    if(!cap) return;
+    var rUm=parseFloat(cap.value), r=rUm*1e-6, gamma=0.03;
+    var dp=2*gamma/r; // Pa
+    var cv=document.getElementById('capVal'); if(cv) cv.textContent=rUm.toFixed(1);
+    capOut.innerHTML='裂缝半径 <b>'+rUm.toFixed(1)+' µm</b> → 毛细压力 <b>'+(dp/1000).toFixed(1)+' kPa</b>（≈ '+(dp/101325).toFixed(2)+' 个大气压）';
+    var w=Math.min(100, Math.max(3, 100*(Math.log10(dp/1000)+1)/3));
+    capBar.style.width=w+'%';
+    capBar.textContent=(dp/1000).toFixed(1)+' kPa';
+  }
+  if(cap){cap.addEventListener('input',capUpdate);capUpdate();}
+
+  // ---------- 2. 磁场夹角 ----------
+  var fld=document.getElementById('fieldAngle'),fldOut=document.getElementById('fieldOut'),
+      fldBar=document.getElementById('fieldBar'),fldSvg=document.getElementById('fieldSvg');
+  function fieldUpdate(){
+    if(!fld) return;
+    var a=parseFloat(fld.value), v=Math.pow(Math.sin(a*Math.PI/180),2);
+    var fv=document.getElementById('fieldVal'); if(fv) fv.textContent=a;
+    fldOut.innerHTML='裂纹与磁力线夹角 <b>'+a+'°</b> → 漏磁信号强度约 <b>'+(v*100).toFixed(0)+'%</b>（90° 最强，0° 几乎为零）';
+    fldBar.style.width=Math.max(2,v*100)+'%';
+    if(fldSvg){
+      var cx=200,cy=80;
+      var rad=a*Math.PI/180;
+      var x2=cx+120*Math.cos(rad), y2=cy+60*Math.sin(rad);
+      fldSvg.innerHTML='<line x1="20" y1="80" x2="380" y2="80" stroke="#9ec5e8" stroke-width="2" stroke-dasharray="6 5"/>'
+        +'<text x="24" y="70" font-size="11" fill="#5b6470">磁力线方向 →</text>'
+        +'<line x1="'+(cx-120*Math.cos(rad))+'" y1="'+(cy-60*Math.sin(rad))+'" x2="'+x2+'" y2="'+y2+'" stroke="#b02a2a" stroke-width="3"/>'
+        +'<text x="'+x2+'" y="'+(y2-8)+'" font-size="11" fill="#b02a2a">裂纹</text>'
+        +'<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#1f3864"/>';
+    }
+  }
+  if(fld){fld.addEventListener('input',fieldUpdate);fieldUpdate();}
+
+  // ---------- 3. 超声 A 扫描 ----------
+  var utX=document.getElementById('utPos'),utOut=document.getElementById('utOut'),utCanvas=document.getElementById('utCanvas');
+  var V=5920, TH=40, FLAW_D=15, FLAW_X=30, BEAM=6;
+  var TH_M=TH/1000, FLAW_M=FLAW_D/1000;
+  function utUpdate(){
+    if(!utX||!utCanvas) return;
+    var x=parseFloat(utX.value);
+    var w=utCanvas.width, h=utCanvas.height, ctx=utCanvas.getContext('2d');
+    ctx.clearRect(0,0,w,h);
+    // 上方剖面
+    var top=18, ph=90, left=40, right=w-20, plateW=right-left;
+    var sx=left + (x/60)*plateW;
+    ctx.fillStyle='#eef3fa'; ctx.fillRect(left,top,plateW,ph);
+    ctx.strokeStyle='#1f3864'; ctx.strokeRect(left,top,plateW,ph);
+    // 缺陷
+    var fx=left+(FLAW_X/60)*plateW, fy=top+(FLAW_D/TH)*ph;
+    ctx.strokeStyle='#b02a2a'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(fx-14,fy); ctx.lineTo(fx+14,fy); ctx.stroke();
+    // 探头
+    ctx.fillStyle='#1f3864'; ctx.fillRect(sx-9,top-11,18,11);
+    ctx.strokeStyle='#1f3864'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(sx,top); ctx.lineTo(sx,top+ph); ctx.stroke();
+    // A 扫描
+    var ax=left, ay=top+ph+34, ah=70, aw=plateW;
+    ctx.strokeStyle='#8a93a0'; ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(ax+aw,ay); ctx.moveTo(ax,ay); ctx.lineTo(ax,ay-ah); ctx.stroke();
+    // 计算时间
+    var tBack=2*TH_M/V*1e6; // us
+    var tFlaw=2*FLAW_M/V*1e6;
+    var tMax=Math.max(16, tBack*1.2);
+    function px(t){return ax + (t/tMax)*aw;}
+    // 始波
+    ctx.strokeStyle='#1f3864'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(px(0),ay); ctx.lineTo(px(0.6),ay-ah*0.9); ctx.lineTo(px(1.1),ay); ctx.stroke();
+    // 缺陷波
+    var off=Math.abs(x-FLAW_X);
+    var amp=off<BEAM? Math.max(0.15,1-off/BEAM) : 0;
+    if(amp>0){
+      ctx.strokeStyle='#b02a2a'; ctx.beginPath(); ctx.moveTo(px(tFlaw),ay); ctx.lineTo(px(tFlaw),ay-ah*0.8*amp); ctx.lineTo(px(tFlaw+0.8),ay); ctx.stroke();
+    }
+    // 底波
+    ctx.strokeStyle='#0f6b6b'; ctx.beginPath(); ctx.moveTo(px(tBack),ay); ctx.lineTo(px(tBack),ay-ah*0.55); ctx.lineTo(px(tBack+0.8),ay); ctx.stroke();
+    // 标注
+    ctx.fillStyle='#5b6470'; ctx.font='10px sans-serif';
+    ctx.fillText('始波',px(0)-4,ay-ah*0.9-2);
+    ctx.fillText('底波 '+tBack.toFixed(1)+' µs',px(tBack)-20,ay-ah*0.55-4);
+    if(amp>0) ctx.fillText('缺陷波 '+tFlaw.toFixed(1)+' µs',px(tFlaw)-18,ay-ah*0.8*amp-4);
+    ctx.fillText('探头位置 '+x.toFixed(0)+' mm（板厚 40 mm，缺陷深 15 mm）',left,ay+18);
+    // 文字输出
+    var depth = amp>0 ? (V*(tFlaw*1e-6)/2*1000).toFixed(1) : '—';
+    var uv=document.getElementById('utVal'); if(uv) uv.textContent=x.toFixed(0);
+    utOut.innerHTML='探头 x = <b>'+x.toFixed(0)+' mm</b>　→　'+(amp>0
+      ? '检测到缺陷回波：<b>'+tFlaw.toFixed(1)+' µs</b> → 深度 <b>'+depth+' mm</b>'
+      : '探头偏离缺陷，<b>无缺陷回波</b>（只剩始波与底波）');
+  }
+  if(utX){utX.addEventListener('input',utUpdate);utUpdate();}
+
+  // ---------- 4. 射线底片黑度 ----------
+  var rtVoid=document.getElementById('rtVoid'),rtOut=document.getElementById('rtOut'),rtSvg=document.getElementById('rtSvg');
+  function rtUpdate(){
+    if(!rtVoid||!rtSvg) return;
+    var hv=parseFloat(rtVoid.value), T=20, mu=0.03; // mm^-1 (示意)
+    var Iback=Math.exp(-mu*T), Ivoid=Math.exp(-mu*(T-hv));
+    var dark=Math.min(1,(Ivoid/Iback-1)*0.9+0.15); // 0..1 显示灰度
+    var rv=document.getElementById('rtVal'); if(rv) rv.textContent=hv.toFixed(1);
+    rtOut.innerHTML='空腔厚度 <b>'+hv.toFixed(1)+' mm</b>（板厚 20 mm）→ 射线透过率比 <b>'+(Ivoid/Iback).toFixed(3)+'</b>'
+      +'，底片该处更'+(hv>0.3?'黑':'接近背景')+'；这就是为什么<b>黑 = 空</b>。';
+    var w=320,h=60, ctx;
+    rtSvg.innerHTML='';
+    rtSvg.innerHTML='<rect x="10" y="10" width="'+w+'" height="'+h+'" fill="rgb('+Math.round(235*(1-dark))+','
+      +Math.round(235*(1-dark))+','+Math.round(235*(1-dark))+'") stroke="#ddd"/>'
+      +'<rect x="'+(10+w/2-40)+'" y="'+10+'" width="80" height="'+h+'" fill="rgb('+Math.round(225*(1-dark*0.95))+','
+      +Math.round(225*(1-dark*0.95))+','+Math.round(225*(1-dark*0.95))+')"/>'
+      +'<text x="14" y="'+(h+30)+'" font-size="11" fill="#5b6470">底片示意：中间 = 空腔投影（越空越黑）</text>';
+  }
+  if(rtVoid){rtVoid.addEventListener('input',rtUpdate);rtUpdate();}
+
+  // ---------- 5. γ 源衰变 ----------
+  var gd=document.getElementById('gDays'),gOut=document.getElementById('gOut'),gSvg=document.getElementById('gSvg');
+  function gUpdate(){
+    if(!gd) return;
+    var d=parseFloat(gd.value), T=74, A=100*Math.pow(0.5,d/T), exp=100/A;
+    var gv=document.getElementById('gVal'); if(gv) gv.textContent=d;
+    gOut.innerHTML='经过 <b>'+d+' 天</b>（≈'+(d/T).toFixed(2)+' 个半衰期）→ 活度 <b>'+A.toFixed(1)+' Ci</b>，'
+      +'曝光时间需 <b>×'+exp.toFixed(2)+'</b>';
+    var pts=[], W=340,H=120,L=40,B=H-24;
+    for(var i=0;i<=240;i+=4){
+      var a=100*Math.pow(0.5,i/T);
+      var x=L+(i/240)*(W-L-10), y=B-(a/100)*(B-14);
+      pts.push(x.toFixed(1)+','+y.toFixed(1));
+    }
+    var x=L+(d/240)*(W-L-10), y=B-(A/100)*(B-14);
+    gSvg.innerHTML='<polyline fill="none" stroke="#0f6b6b" stroke-width="2" points="'+pts.join(' ')+'"/>'
+      +'<circle cx="'+x+'" cy="'+y+'" r="4" fill="#b02a2a"/>'
+      +'<line x1="'+L+'" y1="'+B+'" x2="'+(W-6)+'" y2="'+B+'" stroke="#c9cfd8"/>'
+      +'<line x1="'+L+'" y1="14" x2="'+L+'" y2="'+B+'" stroke="#c9cfd8"/>'
+      +'<text x="4" y="20" font-size="10" fill="#5b6470">100 Ci</text>'
+      +'<text x="'+(W-30)+'" y="'+(B+16)+'" font-size="10" fill="#5b6470">240 天</text>';
+  }
+  if(gd){gd.addEventListener('input',gUpdate);gUpdate();}
+
+  // ---------- 6. 选方法决策 ----------
+  var state={loc:null,mat:null,shape:null};
+  function pick(k,v){
+    state[k]=v;
+    document.querySelectorAll('[data-k="'+k+'"]').forEach(function(b){
+      b.classList.toggle('on', b.dataset.v===v);
+    });
+    var el=document.getElementById('decResult');
+    if(state.loc==='surface'){
+      if(state.mat==='ferro') el.innerHTML='<b>推荐：MPT（磁粉）</b><br>表面/近表面缺陷 + 铁磁材料 → 磁粉最快、最经济；记得两个方向各测一次。';
+      else if(state.mat==='nonferro') el.innerHTML='<b>推荐：LPT（渗透）</b><br>表面开口缺陷 + 非铁磁（不锈钢/铝/钛）→ 渗透；若缺陷未开口，渗透无效。';
+      else el.innerHTML='先选材料是否铁磁。';
+    }else if(state.loc==='inside'){
+      if(state.shape==='planar') el.innerHTML='<b>推荐：UT（超声）</b><br>内部平面型缺陷（裂纹、未熔合）→ 超声对方向敏感但检出好；单面可达、无辐射。';
+      else if(state.shape==='volumetric') el.innerHTML='<b>推荐：RT（射线）</b><br>内部体积型缺陷（气孔、夹渣）→ 射线对比直观、有永久记录；注意辐射管理与两侧接近。';
+      else el.innerHTML='先选缺陷形状（平面/体积）。';
+    }else el.innerHTML='先选缺陷位置（表面开口 / 内部）。';
+  }
+  document.querySelectorAll('.choices button[data-k]').forEach(function(b){
+    b.addEventListener('click',function(){pick(b.dataset.k,b.dataset.v);});
+  });
+})();
+</script>
+</body>
+</html>
